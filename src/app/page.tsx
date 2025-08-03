@@ -4,7 +4,7 @@ import ComingSoonButton from "../components/ComingSoon";
 
 const MainContent: React.FC = () => {
   return (
-    <main className="flex flex-1 items-center justify-center px-4 sm:px-6 lg:px-8">
+    <main className="flex flex-1 items-center justify-center px-4 sm:px-6 lg:px-8 min-h-screen">
       <div className="mx-auto max-w-4xl text-center">
         {/* Background decoration */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">

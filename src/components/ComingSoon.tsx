@@ -5,7 +5,7 @@ const ComingSoonButton: React.FC = () => {
   const [clicked, setClicked] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
 
-  // Target time: 5th August 2:00 PM IST
+  // Target time: 5th August 4:00 PM IST
   const targetDate = new Date("2025-08-05T16:00:00+05:30");
 
   useEffect(() => {
@@ -21,10 +21,7 @@ const ComingSoonButton: React.FC = () => {
       } else {
         const totalSeconds = Math.floor(diff / 1000);
         const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
-          2,
-          "0",
-        );
+        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
         const seconds = String(totalSeconds % 60).padStart(2, "0");
 
         setTimeLeft(`${hours} hrs : ${minutes} min : ${seconds} sec`);
@@ -39,7 +36,7 @@ const ComingSoonButton: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4 scale-75 sm:scale-100">
+    <div className="flex flex-col items-center space-y-6 scale-75 sm:scale-100">
       <button
         onClick={handleClick}
         className={`group relative transform rounded-xl bg-red-600 px-20 py-6 text-2xl font-semibold transition-all duration-500 hover:scale-105 
@@ -59,11 +56,33 @@ const ComingSoonButton: React.FC = () => {
       </button>
 
       {clicked && (
-        <p className="text-white-800  text-sm  font-light">
-          Publication of Provitional Nomination List :
-          <br/> 
-          {timeLeft}
-        </p>
+        <>
+          <p className="text-white text-center text-sm font-light fade-in-up delay-[200ms]">
+            Publication of Provisional Nomination List:
+            <br />
+            {timeLeft}
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-10 px-4 mt-4">
+            <div className="feature-card animation-delay-300">
+              <h3 className="text-lg font-semibold mb-2">🎭 MemeFeed Banegi!</h3>
+              <p className="text-sm">
+                Post daalo memes, rants ya kuch bhi! <br />
+                Log karenge ❤️ aur 🗯️ <br />
+                Apni mini Instagram banegi yahan!
+              </p>
+            </div>
+
+            <div className="feature-card animation-delay-500">
+              <h3 className="text-lg font-semibold mb-2">🗳️ Vote Ka Mood?</h3>
+              <p className="text-sm">
+                Exit Poll chalu hoga bhai! <br />
+                Batao kaun jeetega? Prediction karo, <br />
+                aur ban jao political guru!
+              </p>
+            </div>
+          </div>
+        </>
       )}
 
       <style jsx>{`
@@ -77,6 +96,43 @@ const ComingSoonButton: React.FC = () => {
           }
           100% {
             transform: rotateX(360deg);
+          }
+        }
+
+        .feature-card {
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 1rem;
+          padding: 1.5rem;
+          width: 18rem;
+          color: white;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+          animation: fadeInUp 0.6s ease forwards;
+          opacity: 0;
+        }
+
+        .animation-delay-300 {
+          animation-delay: 0.3s;
+        }
+
+        .animation-delay-500 {
+          animation-delay: 0.5s;
+        }
+
+        .fade-in-up {
+          animation: fadeInUp 0.8s ease forwards;
+          opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+          0% {
+            transform: translateY(20px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateY(0px);
+            opacity: 1;
           }
         }
       `}</style>
