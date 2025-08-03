@@ -6,7 +6,7 @@ const ComingSoonButton: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState("");
 
   // Target time: 5th August 2:00 PM IST
-  const targetDate = new Date("2025-08-05T14:00:00+05:30");
+  const targetDate = new Date("2025-08-05T16:00:00+05:30");
 
   useEffect(() => {
     if (!clicked) return;
