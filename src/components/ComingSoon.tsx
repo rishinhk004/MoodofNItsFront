@@ -39,7 +39,7 @@ const ComingSoonButton: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-4">
+    <div className="flex flex-col items-center space-y-4 scale-75 sm:scale-100">
       <button
         onClick={handleClick}
         className={`group relative transform rounded-xl bg-red-600 px-20 py-6 text-2xl font-semibold transition-all duration-500 hover:scale-105 
@@ -59,8 +59,10 @@ const ComingSoonButton: React.FC = () => {
       </button>
 
       {clicked && (
-        <p className="text-white-800 text-lg font-light">
-          Countdown : {timeLeft}
+        <p className="text-white-800  text-sm  font-light">
+          Publication of Provitional Nomination List :
+          <br/> 
+          {timeLeft}
         </p>
       )}
 

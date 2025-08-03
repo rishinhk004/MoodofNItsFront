@@ -17,7 +17,6 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center space-x-6">
-          
           <a
             href="https://www.youtube.com/watch?v=Ru_qERUNxlY"
             target="_blank"

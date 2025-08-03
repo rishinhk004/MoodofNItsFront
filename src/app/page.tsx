@@ -24,7 +24,7 @@ const MainContent: React.FC = () => {
             <img
               src="https://res.cloudinary.com/dz2mlxltd/image/upload/v1754242015/Screenshot_2025-08-03_225537_ngnaaf.png" // your Cloudinary link here
               alt="Elections visual"
-              className="mx-auto h-[300px] w-[500px] rounded-xl object-cover shadow-lg"
+              className="mx-auto h-[300px] w-[500px] rounded-xl object-cover shadow-lg scale-[.85] sm:scale-100"
             />
           </div>
 
