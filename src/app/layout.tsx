@@ -1,4 +1,6 @@
 import "~/styles/globals.css";
+import Navbar from "~/components/Navbar";
+import Footer from "~/components/Footer";
 
 import { Inter } from "next/font/google";
 
@@ -20,7 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>{children}</body>
+      <body className={`font-sans ${inter.variable} min-h-screen bg-black text-white font-inter flex flex-col`}>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

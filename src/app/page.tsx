@@ -1,37 +1,40 @@
-import Link from "next/link";
+import React from 'react';
 
-export default function HomePage() {
+import ComingSoonButton from '../components/ComingSoon';
+
+const MainContent: React.FC = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <main className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="text-center max-w-4xl mx-auto">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-red-500/5 blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-red-500/5 blur-3xl"></div>
+        </div>
+
+        {/* Main content */}
+        <div className="relative z-10">
+          <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold mb-8 bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent leading-tight">
+            GUB Elections  2025
+          </h1>
+          <div className="text-4xl sm:text-5xl lg:text-4xl font-bold text-white-500 mb-6 tracking-wide">
+           
+          </div>
+
+          {/* 📸 Image from Cloudinary */}
+<div className="mb-12">
+  <img
+    src="https://res.cloudinary.com/dz2mlxltd/image/upload/v1754242015/Screenshot_2025-08-03_225537_ngnaaf.png" // your Cloudinary link here
+    alt="Elections visual"
+    className="mx-auto rounded-xl shadow-lg w-[500px] h-[300px] object-cover"
+  />
+</div>
+
+          <ComingSoonButton />
         </div>
       </div>
     </main>
   );
-}
+};
+
+export default MainContent;
