@@ -64,24 +64,25 @@ const ComingSoonButton: React.FC = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-10 px-4 mt-4">
-            <div className="feature-card animation-delay-300">
-              <h3 className="text-lg font-semibold mb-2">🎭 MemeFeed Banegi!</h3>
-              <p className="text-sm">
-                Post daalo memes, rants ya kuch bhi! <br />
-                Log karenge ❤️ aur 🗯️ <br />
-                Apni mini Instagram banegi yahan!
-              </p>
-            </div>
+  <div className="feature-card animation-delay-300 max-w-xs text-center">
+    <h3 className="text-lg font-semibold mb-2">🎭 MemeFeed is Coming!</h3>
+    <p className="text-sm">
+      Got memes, rants, or random tea ? <br />
+      Post away and see what clicks! <br />
+      Let the chaos (and laughs) begin.
+    </p>
+  </div>
 
-            <div className="feature-card animation-delay-500">
-              <h3 className="text-lg font-semibold mb-2">🗳️ Vote Ka Mood?</h3>
-              <p className="text-sm">
-                Exit Poll chalu hoga bhai! <br />
-                Batao kaun jeetega? Prediction karo, <br />
-                aur ban jao political guru!
-              </p>
-            </div>
-          </div>
+  <div className="feature-card animation-delay-500 max-w-xs text-center">
+    <h3 className="text-lg font-semibold mb-2">🗳️ What's the Mood?</h3>
+    <p className="text-sm">
+      Exit polls are going live! <br />
+      Make your own prediction. <br />
+      Who has got the the best instincts?
+    </p>
+  </div>
+</div>
+
         </>
       )}
 
