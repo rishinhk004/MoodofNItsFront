@@ -21,7 +21,10 @@ const ComingSoonButton: React.FC = () => {
       } else {
         const totalSeconds = Math.floor(diff / 1000);
         const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
+          2,
+          "0",
+        );
         const seconds = String(totalSeconds % 60).padStart(2, "0");
 
         setTimeLeft(`${hours} hrs : ${minutes} min : ${seconds} sec`);
@@ -36,7 +39,7 @@ const ComingSoonButton: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center space-y-6 scale-75 sm:scale-100">
+    <div className="flex scale-75 flex-col items-center space-y-6 sm:scale-100">
       <button
         onClick={handleClick}
         className={`group relative transform rounded-xl bg-red-600 px-20 py-6 text-2xl font-semibold transition-all duration-500 hover:scale-105 
@@ -57,32 +60,35 @@ const ComingSoonButton: React.FC = () => {
 
       {clicked && (
         <>
-          <p className="text-white text-center text-sm font-light fade-in-up delay-[200ms]">
+          <p className="fade-in-up text-center text-sm font-light text-white delay-[200ms]">
             Publication of Provisional Nomination List:
             <br />
             {timeLeft}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-10 px-4 mt-4">
-  <div className="feature-card animation-delay-300 max-w-xs text-center">
-    <h3 className="text-lg font-semibold mb-2">🎭 MemeFeed is Coming!</h3>
-    <p className="text-sm">
-      Got memes, rants, or random tea ? <br />
-      Post away and see what clicks! <br />
-      Let the chaos (and laughs) begin.
-    </p>
-  </div>
+          <div className="mt-4 flex flex-col items-center justify-center gap-10 px-4 sm:flex-row">
+            <div className="feature-card animation-delay-300 max-w-xs text-center">
+              <h3 className="mb-2 text-lg font-semibold">
+                🎭 MemeFeed is Coming!
+              </h3>
+              <p className="text-sm">
+                Got memes, rants, or random tea ? <br />
+                Post away and see what clicks! <br />
+                Let the chaos (and laughs) begin.
+              </p>
+            </div>
 
-  <div className="feature-card animation-delay-500 max-w-xs text-center">
-    <h3 className="text-lg font-semibold mb-2">🗳️ What's the Mood?</h3>
-    <p className="text-sm">
-      Exit polls are going live! <br />
-      Make your own prediction. <br />
-      Who has got the the best instincts?
-    </p>
-  </div>
-</div>
-
+            <div className="feature-card animation-delay-500 max-w-xs text-center">
+              <h3 className="mb-2 text-lg font-semibold">
+                🗳️ What's the Mood?
+              </h3>
+              <p className="text-sm">
+                Exit polls wii go live! <br />
+                Make your own prediction. <br />
+                Who has got the the best instincts?
+              </p>
+            </div>
+          </div>
         </>
       )}
 

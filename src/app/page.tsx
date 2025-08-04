@@ -4,7 +4,7 @@ import ComingSoonButton from "../components/ComingSoon";
 
 const MainContent: React.FC = () => {
   return (
-    <main className="flex flex-1 items-center justify-center px-4 sm:px-6 lg:px-8 min-h-screen">
+    <main className="flex min-h-screen flex-1 items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-4xl text-center">
         {/* Background decoration */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -24,7 +24,7 @@ const MainContent: React.FC = () => {
             <img
               src="https://res.cloudinary.com/dz2mlxltd/image/upload/v1754242015/Screenshot_2025-08-03_225537_ngnaaf.png" // your Cloudinary link here
               alt="Elections visual"
-              className="mx-auto h-[300px] w-[500px] rounded-xl object-cover shadow-lg scale-[.85] sm:scale-100"
+              className="mx-auto h-[300px] w-[500px] scale-[.85] rounded-xl object-cover shadow-lg sm:scale-100"
             />
           </div>
 
