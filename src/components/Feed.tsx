@@ -12,7 +12,7 @@ import type { AxiosError, AxiosInstance } from "axios";
 import { auth } from "~/lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Card from "./Card";
-
+import { useRouter } from "next/navigation";
 interface Post {
   id: string;
   title: string;
@@ -123,6 +123,7 @@ const PostPage = () => {
       toast.error(axiosError.response?.data?.msg ?? "Error liking post");
     }
   };
+  const router = useRouter();
 
   return (
     <div className="mx-auto max-w-2xl p-6">
@@ -196,15 +197,22 @@ const PostPage = () => {
       {/* Posts List */}
       <div className="mt-10 space-y-4">
         {posts.map((post) => (
-          <Card
-            key={post.id}
-            title={post.title}
-            description={post.description}
-            imageUrl={post.imageUrl}
-            likes={post.likes}
-            likedByCurrentUser={post.likedByCurrentUser}
-            onLike={() => handleLike(post.id)}
-          />
+              <div
+                key={post.id}
+                onClick={() => router.push(`/post/${post.id}`)}
+                className="cursor-pointer"
+              >
+
+                <Card
+                  key={post.id}
+                  title={post.title}
+                  description={post.description}
+                  imageUrl={post.imageUrl}
+                  likes={post.likes}
+                  likedByCurrentUser={post.likedByCurrentUser}
+                  onLike={() => handleLike(post.id)}
+                />
+              </div>
         ))}
       </div>
     </div>
