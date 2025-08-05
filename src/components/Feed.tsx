@@ -224,7 +224,7 @@ const PostPage = () => {
               likes={post.likes}
               likedByCurrentUser={post.likedByCurrentUser}
               onLike={() => handleLike(post.id)}
-              author={post.author.username}
+              author={post.author?.username ? post.author?.username:"Anonymous"}
               date={post.createdAt}
             />
           </div>
