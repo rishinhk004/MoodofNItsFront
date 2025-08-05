@@ -19,7 +19,12 @@ interface Post {
   description: string;
   imageUrl?: string;
   likes: number;
+  createdAt: string;
   likedByCurrentUser: boolean;
+  author: {
+    id: string;
+    username: string;
+  }
 }
 
 interface ApiResponse<T> {
@@ -34,6 +39,7 @@ const PostPage = () => {
   const [file, setFile] = useState<File | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [user] = useAuthState(auth);
+  const router = useRouter();
 
   const API: AxiosInstance = axios.create({
     baseURL: `${env.NEXT_PUBLIC_API_URL}`,
@@ -123,7 +129,6 @@ const PostPage = () => {
       toast.error(axiosError.response?.data?.msg ?? "Error liking post");
     }
   };
-  const router = useRouter();
 
   return (
     <div className="mx-auto max-w-2xl p-6">
@@ -197,22 +202,19 @@ const PostPage = () => {
       {/* Posts List */}
       <div className="mt-10 space-y-4">
         {posts.map((post) => (
-              <div
-                key={post.id}
-                onClick={() => router.push(`/post/${post.id}`)}
-                className="cursor-pointer"
-              >
-
-                <Card
-                  key={post.id}
-                  title={post.title}
-                  description={post.description}
-                  imageUrl={post.imageUrl}
-                  likes={post.likes}
-                  likedByCurrentUser={post.likedByCurrentUser}
-                  onLike={() => handleLike(post.id)}
-                />
-              </div>
+          <div key={post.id}  onClick={() => router.push(`/post/${post.id}`)} className="cursor-pointer">
+          <Card
+            key={post.id}
+            title={post.title}
+            description={post.description}
+            imageUrl={post.imageUrl}
+            likes={post.likes}
+            likedByCurrentUser={post.likedByCurrentUser}
+            onLike={() => handleLike(post.id)}
+            author={post.author.username}
+            date={post.createdAt}
+          />
+          </div>
         ))}
       </div>
     </div>
