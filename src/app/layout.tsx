@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 import Navbar from "~/components/Navbar";
 import Footer from "~/components/Footer";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -51,6 +52,16 @@ export const viewport = {
   maximumScale: 1,
 };
 
+const toastOps = {
+  classNames: {
+    title: "text-md md:text-lg font-mono",
+    success: "toast-theme-blue",
+    info: "toast-theme-blue",
+    error: "toast-theme-red",
+    warning: "toast-theme-red",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -63,6 +74,11 @@ export default function RootLayout({
       >
         <Navbar />
         <main role="main">{children}</main>
+        <Toaster
+          toastOptions={toastOps}
+          visibleToasts={1}
+          position="bottom-center"
+        />
         <Footer />
       </body>
     </html>
