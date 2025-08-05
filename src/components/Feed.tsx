@@ -19,7 +19,12 @@ interface Post {
   description: string;
   imageUrl?: string;
   likes: number;
+  createdAt: string;
   likedByCurrentUser: boolean;
+  author: {
+    id: string;
+    username: string;
+  }
 }
 
 interface ApiResponse<T> {
@@ -123,7 +128,7 @@ const PostPage = () => {
       toast.error(axiosError.response?.data?.msg ?? "Error liking post");
     }
   };
-
+        console.log(posts)
   return (
     <div className="mx-auto max-w-2xl p-6">
       <h2 className="mb-6 text-3xl font-bold text-center text-white-800 tracking-wide uppercase">
@@ -197,6 +202,8 @@ const PostPage = () => {
       <div className="mt-10 space-y-4">
         {posts.map((post) => (
           <Card
+            author={post.author.username}
+            date={post.createdAt}
             key={post.id}
             title={post.title}
             description={post.description}

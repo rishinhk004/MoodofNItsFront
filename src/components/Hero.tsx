@@ -3,7 +3,7 @@ import GoogleLogin from "./GoogleAuth";
 const Hero: React.FC = () => {
   return (
     <div className="flex min-h-screen w-[100%] flex-col items-center justify-start p-4 lg:justify-center">
-      <div className="flex min-h-[50vh] w-[100%] flex-col items-center justify-center rounded-[1rem] bg-[url('https://res.cloudinary.com/dhry5xscm/image/upload/v1754333130/moodofnits/election_qz1ri3.webp')] bg-cover bg-center bg-no-repeat md:rounded-[4rem] lg:min-h-[100vh]">
+      <div className="flex min-h-[10vh] w-[100%] flex-col items-center justify-center rounded-[1rem] bg-[url('https://res.cloudinary.com/dz2mlxltd/image/upload/v1754392747/Screenshot_2025-08-05_164701_rygjnj.png')] bg-cover bg-center bg-no-repeat md:rounded-[4rem] lg:min-h-[80vh]">
         <div
           className="flex min-h-[50vh] w-[100%] flex-col items-center justify-center p-9 lg:min-h-[100vh]"
           style={{
@@ -29,19 +29,19 @@ const Hero: React.FC = () => {
               & Zero Chill
             </p>
           </div>
-          <div className="flex w-[100%] flex-col items-center justify-center gap-4 p-10 text-xl sm:text-2xl md:flex-row md:justify-between lg:text-[1.25rem]">
+          <div className="flex w-[100%] flex-col items-center justify-center gap-2 p-1 text-xl sm:text-2xl md:flex-row md:justify-between lg:text-[1.25rem]">
             <div className="flex flex-row items-center justify-center gap-4 text-center text-white lg:text-left">
-              <p className="text-sm md:text-xl">
+              <p className="text-xl md:text-xl font-semibold">
                 GUB Elections 2025 at NIT Silchar
               </p>
               <div className="beep"></div>
             </div>
-            <button className="flex flex-row items-center justify-center gap-2 rounded-md bg-[#313131ef] p-2 md:p-6">
+            <button className="flex flex-row items-center justify-center gap-2 rounded-md bg-black p-1 md:p-4">
               <div className="flex flex-col items-center justify-center">
                 <img
                   src="https://res.cloudinary.com/dhry5xscm/image/upload/v1754336369/moodofnits/text-select_dcilsk.svg"
                   alt="exit poll"
-                  className="h-[1rem] w-[1rem] md:h-[2.5rem] md:w-[2.5rem]"
+                  className="h-[1rem] w-[1rem] md:h-[1.5rem] md:w-[1.5rem]"
                 />
               </div>
               <p className="text-lg md:text-xl">Exit Polls</p>
