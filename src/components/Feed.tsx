@@ -105,7 +105,11 @@ const PostPage = () => {
 
   const handleLike = async (postId: string): Promise<void> => {
     try {
-      await API.post(`/like/${postId}`);
+      await API.post(`/like/${postId}`,{
+        data:{
+          postId: postId,
+        }
+      });
       setPosts((prev) =>
         prev.map((p) =>
           p.id === postId

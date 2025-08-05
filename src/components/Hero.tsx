@@ -30,12 +30,12 @@ const Hero: React.FC = () => {
             </p>
           </div>
           <div className="flex w-[100%] flex-col items-center justify-center gap-4 p-10 text-xl sm:text-2xl md:flex-row md:justify-between lg:text-[1.25rem]">
-            <p className="flex flex-row items-center justify-center gap-4 text-center text-white lg:text-left">
+            <div className="flex flex-row items-center justify-center gap-4 text-center text-white lg:text-left">
               <p className="text-sm md:text-xl">
                 GUB Elections 2025 at NIT Silchar
               </p>
               <div className="beep"></div>
-            </p>
+            </div>
             <button className="flex flex-row items-center justify-center gap-2 rounded-md bg-[#313131ef] p-2 md:p-6">
               <div className="flex flex-col items-center justify-center">
                 <img
