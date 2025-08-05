@@ -89,16 +89,22 @@ const GoogleLogin = () => {
       {error && <p className="mt-2 text-red-500">{error.message}</p>}
 
       {showUsernamePrompt && (
-        <div className="space-y-2 text-white-800 ">
-          <Input
-            placeholder="Enter a anonymous username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="bg-transparent text-white border border-gray-600 focus:border-blue-500 focus:ring-blue-500"
-          />
-          <Button onClick={handleUsernameSubmit}>Create Account</Button>
-        </div>
-      )}
+  <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-sm w-full space-y-4 border border-gray-700">
+    <h2 className="text-lg font-semibold text-white text-center">Choose a Username</h2>
+    <Input
+      placeholder="Enter an anonymous username"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      className="bg-gray-800 text-white border border-gray-600 placeholder-gray-400 focus:border-white focus:ring-white rounded-md px-4 py-2"
+    />
+    <Button
+      onClick={handleUsernameSubmit}
+      className="w-full bg-black hover:bg-black text-white font-medium py-2 px-4 rounded-md transition duration-200"
+    >
+      Create Account
+    </Button>
+  </div>
+)}
     </div>
   );
 };
