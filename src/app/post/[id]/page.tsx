@@ -8,6 +8,8 @@ import Card from "../../../components/Card";
 import { auth } from "~/lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+export const runtime = "edge";
+
 interface PostProps {
   params: {
     id?: string;
