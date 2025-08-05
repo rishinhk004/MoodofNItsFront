@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { auth } from "~/lib/firebase";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 const GoogleLogin = () => {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [_user]=useAuthState(auth);
   const [token, setToken] = useState<string | null>(null);
   const [showUsernamePrompt, setShowUsernamePrompt] = useState(false);
   const [username, setUsername] = useState("");
@@ -75,9 +76,9 @@ const GoogleLogin = () => {
 
   return (
     <div className="space-y-4">
-      <Button onClick={handleGoogleSignIn} disabled={loading}>
+      {!_user && <Button onClick={handleGoogleSignIn} disabled={loading}>
         {loading ? "Signing in..." : "Continue with Google"}
-      </Button>
+      </Button>}
 
       {error && <p className="mt-2 text-red-500">{error.message}</p>}
 
