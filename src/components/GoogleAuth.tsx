@@ -32,7 +32,7 @@ const GoogleLogin = () => {
           headers: { Authorization: `Bearer ${firebaseToken}` },
         });
         toast.success(`Welcome back, ${result.user.displayName ?? "User"}!`);
-        router.back();
+        router.push("/");
       } catch (err: unknown) {
         if (
           typeof err === "object" &&
@@ -67,7 +67,7 @@ const GoogleLogin = () => {
 
       toast.success("Account created successfully!");
       setShowUsernamePrompt(false);
-      router.back();
+      router.push("/");
     } catch (err: unknown) {
       toast.error(
         err instanceof Error ? err.message : "Failed to create account",
