@@ -131,9 +131,9 @@ const PostPage = () => {
   };
 
   return (
-    <div className="mx-auto max-w-2xl p-6">
+    <div className="w-[100%] flex flex-col items-center justify-center p-6">
       {user && (
-        <div>
+        <div className="w-[90%] lg:w-[40%]">
           <h2 className="mb-6 text-3xl font-bold text-center text-white-800 tracking-wide uppercase">
             Create a Post
           </h2>
@@ -209,7 +209,7 @@ const PostPage = () => {
           Posts
         </h3>
       )}
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20 place-items-center">
+      <div className="flex flex-wrap justify-center gap-6 w-[100%]">
 
         {posts.map((post) => (
           <div

@@ -90,10 +90,10 @@ const GoogleLogin = () => {
 
       {showUsernamePrompt && (
         <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-sm w-full space-y-4 border border-gray-700">
-          <h2 className="text-lg font-semibold text-white text-center">Choose a Username</h2>
+          <h2 className="text-lg font-semibold text-white text-center">Choose an anonymous nickname</h2>
           {showUsernamePrompt && (
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-sm w-full space-y-4 border border-gray-700">
-              <h2 className="text-lg font-semibold text-white text-center">Choose a Username</h2>
+              <h2 className="text-lg font-semibold text-white text-center">Choose an anonymous nickname</h2>
               <Input
                 placeholder="Enter an anonymous username"
                 value={username}
