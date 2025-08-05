@@ -23,52 +23,47 @@ const Card: React.FC<CardProps> = ({
   author,
   date = new Date().toISOString(),
 }) => {
+  const formattedDate = new Date(date ?? "").toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
   return (
-    <div className="mx-auto max-w-sm overflow-hidden rounded-xl border border-gray-700 bg-[#1c1c1e] text-white shadow-lg">
-      <div className="flex items-center justify-between p-4">
-        <div className="flex items-center gap-3">
-          <div>
-            <p className="text-sm text-white-400">
-              <span className="text-sm text-gray-400 font-normal">Author:</span>{' '}
-              <span className="font-semibold">{author}</span>
-            </p>
-         <p className="text-xs text-gray-400">
-  Date: {new Date(date).toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  })}
-</p>
-
-          </div>
+    <div className="mx-auto w-[400px] rounded-2xl border border-gray-700 bg-[#1c1c1e] p-4 shadow-md transition hover:shadow-lg">
+      {/* Header */}
+      <div className="mb-3 flex items-start justify-between">
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold text-white">{title}</h2>
+          <p className="text-sm text-gray-400">
+            By <span className="font-medium text-white">{author ?? "Anonymous"}</span> • {formattedDate}
+          </p>
         </div>
-
-        <button
-          onClick={onLike}
-          className="transform transition hover:scale-110"
-        >
+        <button onClick={onLike} className="mt-1 transition hover:scale-110">
           <Heart
             size={22}
             className={
-              likedByCurrentUser ? "fill-red-500 text-red-500" : "text-white"
+              likedByCurrentUser ? "fill-red-500 text-red-500" : "text-gray-400"
             }
           />
         </button>
       </div>
 
+      {/* Image */}
       {imageUrl && (
-        <div className="w-full">
+        <div className="mb-3 overflow-hidden rounded-lg">
           <img
             src={imageUrl}
             alt="Post"
-            className="h-auto w-full object-cover"
+            className="h-48 w-full object-cover transition duration-300 hover:scale-105"
           />
         </div>
       )}
 
-      <div className="space-y-2 p-4">
-        <p className="text-sm text-gray-200">Description: {description}</p>
-        <p className="text-sm text-gray-400">Likes: {likes}</p>
+      {/* Body */}
+      <div className="space-y-2 text-sm text-gray-300">
+        <p>{description}</p>
+        <p className="text-xs text-gray-400">Likes: {likes}</p>
       </div>
     </div>
   );

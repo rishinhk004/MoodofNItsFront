@@ -128,7 +128,7 @@ const PostPage = () => {
       toast.error(axiosError.response?.data?.msg ?? "Error liking post");
     }
   };
-        console.log(posts)
+
   return (
     <div className="mx-auto max-w-2xl p-6">
       <h2 className="mb-6 text-3xl font-bold text-center text-white-800 tracking-wide uppercase">
@@ -198,8 +198,9 @@ const PostPage = () => {
         </Button>
       </div>
 
+   
       {/* Posts List */}
-      <div className="mt-10 space-y-4">
+      <div className="mt-10 flex ">
         {posts.map((post) => (
           <Card
             author={post.author.username}
