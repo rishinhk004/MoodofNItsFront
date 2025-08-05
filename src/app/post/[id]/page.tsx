@@ -33,9 +33,9 @@ interface Comment {
   content: string;
   createdAt: string;
   author: {
-    name: string;
+    username: string;
   };
-  replies: Comment[];
+  replies?: Comment[];
 }
 
 interface ApiResponse<T> {
@@ -64,21 +64,18 @@ const PostPage = ({ params }: PostProps) => {
   const fetchData = async () => {
     if (!params.id) return;
 
-    toast.promise(
-      Promise.all([
+    try {
+      const [postRes, commentsRes] = await Promise.all([
         API.get<ApiResponse<Post>>(`/post/${params.id}`),
         API.get<ApiResponse<Comment[]>>(`/comments/${params.id}`),
-      ]),
-      {
-        loading: "Fetching post and comments...",
-        success: ([postRes, commentsRes]) => {
-          setPost(postRes.data.msg);
-          setComments(commentsRes.data.msg);
-          return "Post and comments fetched!";
-        },
-        error: "Failed to fetch post or comments",
-      }
-    );
+      ]);
+
+      setPost(postRes.data.msg);
+      setComments(commentsRes.data.msg);
+    } catch (err) {
+      toast.error("Failed to fetch post or comments");
+      console.error("Fetch error:", err);
+    }
   };
 
   useEffect(() => {
@@ -92,9 +89,7 @@ const PostPage = ({ params }: PostProps) => {
         prev && prev.id === postId
           ? {
               ...prev,
-              likes: prev.likedByCurrentUser
-                ? prev.likes - 1
-                : prev.likes + 1,
+              likes: prev.likedByCurrentUser ? prev.likes - 1 : prev.likes + 1,
               likedByCurrentUser: !prev.likedByCurrentUser,
             }
           : prev
@@ -113,33 +108,32 @@ const PostPage = ({ params }: PostProps) => {
     parentId?: string;
   }) => {
     try {
+      if (!params.id) {
+        toast.error("No post ID provided");
+        return;
+      }
+
       const token = user ? await user.getIdToken() : null;
       if (!token) throw new Error("Not authenticated");
 
-      toast.promise(
-        API.post<ApiResponse<Comment>>(
-          "/comments",
-          {
-            content,
-            postId: params.id,
-            parentId,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ),
+      const res = await API.post<ApiResponse<Comment>>(
+        "/comments",
         {
-          loading: "Posting comment...",
-          success: "Comment posted!",
-          error: "Failed to post comment",
+          content,
+          postId: params.id,
+          parentId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-
+      toast.success("Comment posted!");
       void fetchData();
     } catch (err) {
       const axiosError = err as AxiosError<{ msg?: string }>;
+      console.error("Comment creation failed:", axiosError);
       toast.error(axiosError.response?.data?.msg ?? "Error creating comment");
     }
   };
@@ -158,20 +152,20 @@ const PostPage = ({ params }: PostProps) => {
     return (
       <div className="min-w-fit" style={{ marginLeft: `${level * 1.5}rem` }}>
         <div className="flex flex-row items-center gap-2">
-          <h1 className="text-[12px]">{comment.author.name}</h1>
+          <h1 className="text-[12px]">{comment.author.username}</h1>
           <h1 className="text-[10px] text-[#888888]">
             {new Date(comment.createdAt).toLocaleString()}
           </h1>
         </div>
         <h1 className="text-[16px] w-full">{comment.content}</h1>
-        <div className="flex flex-row items-center justify-between w-full">
+        <div className="flex flex-row items-center gap-4 justify-between w-full">
           <button
             className="text-[#9e9e9e]"
             onClick={() => setReplyBox(!replyBox)}
           >
             REPLY
           </button>
-          {comment.replies.length > 0 && (
+          {Array.isArray(comment.replies) && comment.replies.length > 0 && (
             <button
               className="text-[#9e9e9e]"
               onClick={() => setViewReplies(!viewReplies)}
@@ -213,10 +207,14 @@ const PostPage = ({ params }: PostProps) => {
           </div>
         )}
 
-        {viewReplies &&
-          comment.replies.map((reply) => (
-            <CommentBox key={reply.id} comment={reply} level={level + 1} />
-          ))}
+        {/* Render Nested Replies */}
+        {viewReplies && Array.isArray(comment.replies) && (
+          <div className="flex flex-col gap-4 mt-2">
+            {comment.replies.map((reply) => (
+              <CommentBox key={reply.id} comment={reply} level={level + 1} />
+            ))}
+          </div>
+        )}
       </div>
     );
   };
@@ -244,7 +242,7 @@ const PostPage = ({ params }: PostProps) => {
           <div className="mt-10 bg-[#16181B] rounded-md w-full lg:w-[50%] p-4 overflow-x-auto">
             <h1 className="text-lg font-bold">{comments.length} Comments</h1>
 
-            {/* Add Comment Input with Button */}
+            {/* Add Comment Input */}
             <div className="mt-4 w-full flex flex-col gap-3">
               <input
                 type="text"
@@ -270,7 +268,7 @@ const PostPage = ({ params }: PostProps) => {
               </button>
             </div>
 
-            <div className="flex flex-col items-start justify-center w-full gap-6 mt-6">
+            <div className="flex flex-col items-start justify-center w-full gap-6 mt-6 overflow-visible">
               {comments.map((comment) => (
                 <CommentBox key={comment.id} comment={comment} />
               ))}
