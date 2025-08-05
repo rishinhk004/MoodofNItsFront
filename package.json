@@ -13,6 +13,7 @@
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.7.1",
     "husky": "^9.1.7",
+    "lucide-react": "^0.536.0",
     "next": "^14.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
