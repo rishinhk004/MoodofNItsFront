@@ -105,7 +105,11 @@ const PostPage = () => {
 
   const handleLike = async (postId: string): Promise<void> => {
     try {
-      await API.post(`/like/${postId}`);
+      await API.post(`/like/${postId}`,{
+        data:{
+          postId: postId,
+        }
+      });
       setPosts((prev) =>
         prev.map((p) =>
           p.id === postId
@@ -124,60 +128,91 @@ const PostPage = () => {
   };
 
   return (
-    <div className="mx-auto max-w-2xl p-4">
-      <div className="space-y-4 rounded-xl bg-white p-4 shadow-md">
-        <Input
-          placeholder="Post title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <Textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          className="w-full rounded-md border p-2"
-        >
-          <option value="TEXT">Text</option>
-          <option value="PHOTO">Photo</option>
-          <option value="VIDEO">Video</option>
-        </select>
-        <label className="flex cursor-pointer items-center gap-2">
-          <ImagePlus size={20} />
-          <span>{file ? file.name : "Upload Image"}</span>
-          <input
-            type="file"
-            className="hidden"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-          />
-        </label>
-        <Button
-          onClick={handleSubmit}
-          className="flex w-full items-center gap-2"
-        >
-          <Send size={16} /> Post
-        </Button>
-      </div>
+  <div className="mx-auto max-w-2xl p-6">
+  <h2 className="mb-6 text-3xl font-bold text-center text-white-800 tracking-wide uppercase">
+    Create a Post
+  </h2>
 
-      {/* Posts List */}
-      <div className="mt-8 space-y-4">
-        {posts.map((post) => (
-          <Card
-            key={post.id}
-            title={post.title}
-            description={post.description}
-            imageUrl={post.imageUrl}
-            likes={post.likes}
-            likedByCurrentUser={post.likedByCurrentUser}
-            onLike={() => handleLike(post.id)}
-          />
-        ))}
-      </div>
+  <div className="space-y-5 rounded-xl bg-white p-6 shadow-lg">
+    {/* Post Title */}
+    <div>
+      <label className="block mb-1 text-sm font-medium text-gray-700">Title</label>
+      <Input
+        placeholder="Enter your post title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="text-black border-gray-300"
+      />
     </div>
+
+    {/* Description */}
+    <div>
+      <label className="block mb-1 text-sm font-medium text-gray-700">Description</label>
+      <Textarea
+        placeholder="Write something..."
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="text-black border-gray-300"
+      />
+    </div>
+
+    {/* Post Type */}
+    <div>
+      <label className="block mb-1 text-sm font-medium text-gray-700">Type</label>
+      <select
+  value={type}
+  onChange={(e) => setType(e.target.value)}
+  className="w-full rounded-md border border-gray-300 p-2 pr-10 text-black bg-white "
+>
+  <option value="" disabled>Select post type</option>
+  <option value="TEXT">Text</option>
+  <option value="PHOTO">Photo</option>
+  <option value="VIDEO">Video</option>
+</select>
+
+    </div>
+
+    {/* File Upload */}
+    <div>
+      <label className="block mb-1 text-sm font-medium text-gray-700">Upload Image</label>
+      <label className="flex items-center gap-2 rounded-md border border-dashed border-gray-300 p-2 cursor-pointer text-gray-700 hover:bg-gray-50 transition">
+        <ImagePlus size={18} />
+        <span className="text-sm">{file ? file.name : "Choose file"}</span>
+        <input
+          type="file"
+          className="hidden"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+        />
+      </label>
+    </div>
+
+    {/* Submit Button */}
+    <Button
+      onClick={handleSubmit}
+      className="w-full bg-black hover:bg-black text-white font-medium py-2 flex justify-center items-center gap-2 rounded-md transition"
+    >
+      <Send size={16} /> Post
+    </Button>
+  </div>
+
+  {/* Posts List */}
+  <div className="mt-10 space-y-4">
+    {posts.map((post) => (
+      <Card
+        key={post.id}
+        title={post.title}
+        description={post.description}
+        imageUrl={post.imageUrl}
+        likes={post.likes}
+        likedByCurrentUser={post.likedByCurrentUser}
+        onLike={() => handleLike(post.id)}
+      />
+    ))}
+  </div>
+</div>
+
+
   );
 };
 
