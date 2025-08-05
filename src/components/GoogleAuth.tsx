@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FcGoogle } from 'react-icons/fc';
 import { auth } from "~/lib/firebase";
 import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { Button } from "./ui/button";
@@ -75,9 +76,14 @@ const GoogleLogin = () => {
 
   return (
     <div className="space-y-4">
-      <Button onClick={handleGoogleSignIn} disabled={loading}>
-        {loading ? "Signing in..." : "Continue with Google"}
-      </Button>
+      <Button
+  onClick={handleGoogleSignIn}
+  disabled={loading}
+  className="bg-white text-black border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+>
+  <FcGoogle className="text-xl" />
+  {loading ? "Signing in..." : "Continue with Google"}
+</Button>
 
       {error && <p className="mt-2 text-red-500">{error.message}</p>}
 
