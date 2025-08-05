@@ -77,7 +77,7 @@ const GoogleLogin = () => {
 
   return (
     <div className="space-y-4">
-      {_user && <Button
+      {!_user && <Button
         onClick={handleGoogleSignIn}
         disabled={loading}
         className="bg-white text-black border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
