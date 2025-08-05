@@ -6,6 +6,15 @@ export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
+      keyframes: {
+    glow: {
+      '0%, 100%': { boxShadow: '0 0 0px red' },
+      '80%': { boxShadow: '0 0 15px 5px red' },
+    },
+  },
+  animation: {
+    glow: 'glow 1s infinite',
+  },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
