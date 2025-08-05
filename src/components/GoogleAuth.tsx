@@ -89,11 +89,12 @@ const GoogleLogin = () => {
       {error && <p className="mt-2 text-red-500">{error.message}</p>}
 
       {showUsernamePrompt && (
-        <div className="space-y-2">
+        <div className="space-y-2 text-white-800 ">
           <Input
             placeholder="Enter a anonymous username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className="bg-transparent text-white border border-gray-600 focus:border-blue-500 focus:ring-blue-500"
           />
           <Button onClick={handleUsernameSubmit}>Create Account</Button>
         </div>
