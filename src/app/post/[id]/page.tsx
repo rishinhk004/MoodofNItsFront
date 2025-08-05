@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -98,12 +99,18 @@ const Post = ({ params }: PostProps) => {
         <p>Loading...</p>
       ) : (
         <div className="w-full max-w-2xl">
-          <button
-            onClick={() => router.back()}
-            className="mb-4 text-blue-600 hover:underline"
-          >
-            ← Back
-          </button>
+          {/* Back to Home Button */}
+      <Link
+        href="/"
+        className="absolute top-24 left-20"
+      >
+        <span
+          className="flex items-center gap-2 rounded-md bg-blue/60 hover:bg-black/80 px-4 py-2 text-sm font-semibold shadow transition border border-white/50"
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
+          ← Back to Home
+        </span>
+      </Link>
           <Card
             key={post.id}
             title={post.title}

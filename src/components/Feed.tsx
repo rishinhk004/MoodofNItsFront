@@ -203,7 +203,11 @@ const PostPage = () => {
       }
 
       {/* Posts List */}
+      <h3 className="mt-12 mb-4 text-3xl font-bold text-center text-white tracking-wide uppercase">
+        Posts
+      </h3>
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20 place-items-center">
+        
         {posts.map((post) => (
           <div
             key={post.id}
