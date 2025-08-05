@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -97,12 +97,12 @@
   animation: glow-pulse 2s ease-in-out infinite;
 }
 
-.beep{
-  border:0 solid transparent;
+.beep {
+  border: 0 solid transparent;
   display: inline-block;
   border-radius: 20px;
-  height:20px;
-  width:20px;
+  height: 20px;
+  width: 20px;
   background-color: red;
   box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
   animation-name: beepAnim;
@@ -121,7 +121,6 @@
     box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
     transform: scale(1);
   }
-  
 }
 
 @layer base {
@@ -131,4 +130,63 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@keyframes neon-red-glow {
+  0% {
+    box-shadow:
+      0 0 8px rgba(255, 64, 64, 0.5),
+      0 0 15px rgba(255, 64, 64, 0.3),
+      0 0 20px rgba(255, 64, 64, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(255, 64, 64, 0.7),
+      0 0 20px rgba(255, 64, 64, 0.5),
+      0 0 25px rgba(255, 64, 64, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 8px rgba(255, 64, 64, 0.5),
+      0 0 15px rgba(255, 64, 64, 0.3),
+      0 0 20px rgba(255, 64, 64, 0.2);
+  }
+}
+@keyframes neon-glow-blue {
+  0% {
+    box-shadow:
+      0 0 8px rgba(0, 191, 255, 0.5),
+      0 0 15px rgba(0, 191, 255, 0.3),
+      0 0 20px rgba(0, 191, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 10px rgba(0, 191, 255, 0.7),
+      0 0 20px rgba(0, 191, 255, 0.5),
+      0 0 25px rgba(0, 191, 255, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 8px rgba(0, 191, 255, 0.5),
+      0 0 15px rgba(0, 191, 255, 0.3),
+      0 0 20px rgba(0, 191, 255, 0.2);
+  }
+}
+
+.toast-theme-blue {
+  background-color: #1b1f23;
+  color: #00bfff;
+  border: 2px solid #00bfff;
+  padding: 16px;
+  animation: neon-glow-blue 2s infinite alternate;
+  text-align: center;
+}
+
+.toast-theme-red {
+  background-color: #1b1f23;
+  color: #ff4040;
+  border: 2px solid #ff4040;
+  padding: 16px;
+  animation: neon-red-glow 2s infinite alternate;
+  text-align: center;
 }

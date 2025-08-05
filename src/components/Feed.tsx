@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { ImagePlus, Send, ThumbsUp } from "lucide-react";
+import { ImagePlus, Send } from "lucide-react";
 import { toast } from "sonner";
 import { env } from "~/env";
-import axios, { AxiosError, AxiosInstance } from "axios";
-import { getAuth } from "firebase/auth";
-
-// ----- Interfaces -----
+import axios from "axios";
+import type { AxiosError, AxiosInstance } from "axios";
+import { auth } from "~/lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Card from "./Card";
 
 interface Post {
   id: string;
@@ -18,6 +19,7 @@ interface Post {
   description: string;
   imageUrl?: string;
   likes: number;
+  likedByCurrentUser: boolean;
 }
 
 interface ApiResponse<T> {
@@ -25,22 +27,19 @@ interface ApiResponse<T> {
   msg: T;
 }
 
-// ----- Main Component -----
-
 const PostPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [type, setType] = useState("TEXT");
   const [file, setFile] = useState<File | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-
-  const auth = getAuth();
+  const [user] = useAuthState(auth);
 
   const API: AxiosInstance = axios.create({
-    baseURL: `${env.NEXT_PUBLIC_API_URL}/api`,
+    baseURL: `${env.NEXT_PUBLIC_API_URL}`,
   });
 
-  API.interceptors.request.use(async (config: any) => {
-    const user = auth.currentUser;
+  API.interceptors.request.use(async (config) => {
     const token = user ? await user.getIdToken() : null;
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -61,41 +60,63 @@ const PostPage = () => {
     void fetchPosts();
   }, []);
 
+  const createPost = async (formData: FormData): Promise<void> => {
+    const { data } = await API.post<ApiResponse<Post>>("/post", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    setPosts((prev) => [data.msg, ...prev]);
+  };
+
   const handleSubmit = async (): Promise<void> => {
-    if (!title || !description) {
-      toast.error("Title and description required");
+    if (!title || !description || !type) {
+      toast.error("Title, description, and type are required");
       return;
     }
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
+    formData.append("type", type);
     if (file) formData.append("photo", file);
 
-    try {
-      await toast.promise(
-        API.post<ApiResponse<Post>>("/post", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        }),
-        {
-          loading: "Posting...",
-          success: "Post created!",
-          error: "Failed to post",
+    toast.promise(
+      (async () => {
+        try {
+          await createPost(formData);
+          setTitle("");
+          setDescription("");
+          setType("TEXT");
+          setFile(null);
+          void fetchPosts();
+        } catch (error) {
+          const axiosError = error as AxiosError<{ msg?: string }>;
+          throw new Error(axiosError.response?.data?.msg ?? "Failed to post");
         }
-      );
-
-      setTitle("");
-      setDescription("");
-      setFile(null);
-      void fetchPosts();
-    } catch {
-    }
+      })(),
+      {
+        loading: "Posting...",
+        success: "Post created!",
+        error: (err: AxiosError) => err.message ?? "Failed to post",
+      },
+    );
   };
 
   const handleLike = async (postId: string): Promise<void> => {
     try {
       await API.post(`/like/${postId}`);
-      void fetchPosts();
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === postId
+            ? {
+              ...p,
+              likes: p.likedByCurrentUser ? p.likes - 1 : p.likes + 1,
+              likedByCurrentUser: !p.likedByCurrentUser,
+            }
+            : p,
+        ),
+      );
     } catch (err: unknown) {
       const axiosError = err as AxiosError<{ msg?: string }>;
       toast.error(axiosError.response?.data?.msg ?? "Error liking post");
@@ -103,9 +124,8 @@ const PostPage = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      {/* Post Form */}
-      <div className="bg-white p-4 rounded-xl shadow-md space-y-4">
+    <div className="mx-auto max-w-2xl p-4">
+      <div className="space-y-4 rounded-xl bg-white p-4 shadow-md">
         <Input
           placeholder="Post title"
           value={title}
@@ -114,9 +134,18 @@ const PostPage = () => {
         <Textarea
           placeholder="Description"
           value={description}
-          onChange={(e: any) => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
         />
-        <label className="flex items-center gap-2 cursor-pointer">
+        <select
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          className="w-full rounded-md border p-2"
+        >
+          <option value="TEXT">Text</option>
+          <option value="PHOTO">Photo</option>
+          <option value="VIDEO">Video</option>
+        </select>
+        <label className="flex cursor-pointer items-center gap-2">
           <ImagePlus size={20} />
           <span>{file ? file.name : "Upload Image"}</span>
           <input
@@ -126,31 +155,26 @@ const PostPage = () => {
             onChange={(e) => setFile(e.target.files?.[0] ?? null)}
           />
         </label>
-        <Button onClick={handleSubmit} className="w-full flex gap-2 items-center">
+        <Button
+          onClick={handleSubmit}
+          className="flex w-full items-center gap-2"
+        >
           <Send size={16} /> Post
         </Button>
       </div>
 
-      {/* Post List */}
+      {/* Posts List */}
       <div className="mt-8 space-y-4">
         {posts.map((post) => (
-          <div key={post.id} className="bg-white rounded-xl p-4 shadow-md space-y-2">
-            <h2 className="text-lg font-semibold">{post.title}</h2>
-            <p>{post.description}</p>
-            {post.imageUrl && (
-              <img
-                src={post.imageUrl}
-                alt="Post"
-                className="w-full rounded-md mt-2"
-              />
-            )}
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm" onClick={() => handleLike(post.id)}>
-                <ThumbsUp size={16} className="mr-1" />
-                {post.likes}
-              </Button>
-            </div>
-          </div>
+          <Card
+            key={post.id}
+            title={post.title}
+            description={post.description}
+            imageUrl={post.imageUrl}
+            likes={post.likes}
+            likedByCurrentUser={post.likedByCurrentUser}
+            onLike={() => handleLike(post.id)}
+          />
         ))}
       </div>
     </div>
