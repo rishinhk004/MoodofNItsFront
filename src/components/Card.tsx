@@ -30,14 +30,18 @@ const Card: React.FC<CardProps> = ({
   });
 
   return (
-    <div className="mx-auto w-[400px] rounded-2xl border border-gray-700 bg-[#1c1c1e] p-4 shadow-md transition hover:shadow-lg">
-      {/* Header */}
-      <div className="mb-3 flex items-start justify-between">
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold text-white">{title}</h2>
-          <p className="text-sm text-gray-400">
-            By <span className="font-medium text-white">{author ?? "Anonymous"}</span> • {formattedDate}
+    <div className="mx-auto w-[200px] overflow-hidden rounded-xl border border-gray-700 bg-[#1c1c1e] text-white shadow-lg">
+
+
+      
+      {/* Top Section (Author + Like) */}
+      <div className="flex items-center justify-between p-4">
+        <div>
+          <p className="text-sm text-white-400">
+            <span className="text-sm text-gray-400 font-normal">Author:</span>{' '}
+            <span className="font-semibold">{author}</span>
           </p>
+          <p className="text-xs text-gray-400">Date: {formattedDate}</p>
         </div>
         <button onClick={onLike} className="mt-1 transition hover:scale-110">
           <Heart
@@ -49,20 +53,20 @@ const Card: React.FC<CardProps> = ({
         </button>
       </div>
 
-      {/* Image */}
+      {/* Image or Placeholder */}
       {imageUrl && (
-        <div className="mb-3 overflow-hidden rounded-lg">
+      <div className="mb-2 h-40 w-full overflow-hidden rounded-lg bg-gray-800 flex items-center justify-center">
           <img
             src={imageUrl}
             alt="Post"
-            className="h-48 w-full object-cover transition duration-300 hover:scale-105"
-          />
-        </div>
+            className="h-full w-full object-cover transition duration-300 hover:scale-105"
+          /> 
+      </div>
       )}
 
       {/* Body */}
-      <div className="space-y-2 text-sm text-gray-300">
-        <p>{description}</p>
+      <div className="p-4 pt-0 flex flex-col justify-between space-y-2 text-sm text-gray-300">
+        <p className="line-clamp-3">{description}</p>
         <p className="text-xs text-gray-400">Likes: {likes}</p>
       </div>
     </div>

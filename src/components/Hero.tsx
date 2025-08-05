@@ -7,9 +7,9 @@ const Hero: React.FC = () => {
         <div
           className="flex min-h-[50vh] w-[100%] flex-col items-center justify-center p-9 lg:min-h-[100vh]"
           style={{
-            backgroundImage:
-              "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.4))",
-          }}
+  backgroundImage:
+    "linear-gradient(to top, rgba(0, 0, 0, 1) 8%, rgba(0, 0, 0, 0.17) 90%)",
+}}
         >
           <div className="flex h-[100%] w-[100%] flex-col items-center justify-center lg:items-start">
             <p className="text-center text-2xl font-bold sm:text-4xl lg:w-[40%] lg:text-left lg:text-6xl">
