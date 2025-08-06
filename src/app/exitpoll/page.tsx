@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-
+import CandidateCard from "~/components/Candidatecard";
 interface CardExitPollProps {
   candidateId?: string;
   photoUrl: string;
@@ -9,24 +9,6 @@ interface CardExitPollProps {
   description: string;
 }
 
-const CardExitPoll: React.FC<CardExitPollProps> = ({candidateId, photoUrl, name, description }) => {
-  return (
-    <div
-      className="flex flex-col items-center justify-end w-64 h-80 rounded-lg shadow-lg text-white p-4 bg-cover bg-center relative overflow-hidden border border-white/20"
-      style={{ backgroundImage: `url(${photoUrl})` }}
-    >
-      {/* Optional overlay for better text visibility */}
-      <div className="absolute inset-0 bg-black/40 z-0" />
-
-      {/* Text content */}
-      <div className="z-10 text-center">
-        <h1 className="text-xl font-semibold">{name}</h1>
-        <p className="text-sm text-gray-200">{description}</p>
-      </div>
-      <button className="bg-[#000000] text-[#ffffff] rounded-lg hover:bg-[#ffffff] hover:text-[#000000] duration-200 px-6 py-2 cursor-pointer z-10">VOTE</button>
-    </div>
-  );
-};
 
 
 const ExitPoll: React.FC = () => {
@@ -83,7 +65,10 @@ const ExitPoll: React.FC = () => {
             General Secretary Gymkhana
           </h1>
           <div className="flex flex-row justify-start items-center gap-4">
-            <CardExitPoll photoUrl="https://res.cloudinary.com/dhry5xscm/image/upload/v1754333130/moodofnits/election_qz1ri3.webp" name="Samarjit" description="Chinki" />
+            <div className="flex flex-col items-center justify-center">
+              <CandidateCard name="Samarjit" position="GST" imageUrl="https://res.cloudinary.com/dhry5xscm/image/upload/v1754333130/moodofnits/election_qz1ri3.webp" />
+              <button className="text-[#ffffff] bg-[#000000] hover:bg-[#ffffff] hover:text-[#000000] duration-200 border-2 rounded-full px-20 py-2">VOTE</button>
+            </div>
           </div>
         </div>
       </div>
