@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import CandidateCard from "~/components/Candidatecard";
+import { PositionDashboard } from "~/components/PollChart";
 interface CardExitPollProps {
   candidateId?: string;
   photoUrl: string;
@@ -9,7 +10,47 @@ interface CardExitPollProps {
   description: string;
 }
 
+// Add these dummy data structures
+const dummyPositions = {
+  GS: {
+    name: "GS",
+    candidates: [
+      { id: "1", name: "Candidate 1", votes: 150, color: "#FF6B6B" },
+      { id: "2", name: "Candidate 2", votes: 120, color: "#4ECDC4" },
+    ]
+  },
+  VP: {
+    name: "VP",
+    candidates: [
+      { id: "3", name: "Candidate 3", votes: 180, color: "#45B7D1" },
+      { id: "4", name: "Candidate 4", votes: 90, color: "#96CEB4" },
+    ]
+  },
+  GSC: {
+    name: "GSC",
+    candidates: [
+      { id: "5", name: "Candidate 5", votes: 200, color: "#D4A5A5" },
+      { id: "6", name: "Candidate 6", votes: 160, color: "#9B5DE5" },
+    ]
+  },
+  GST: {
+    name: "GST",
+    candidates: [
+      { id: "7", name: "Candidate 7", votes: 140, color: "#FFB5E8" },
+      { id: "8", name: "Candidate 8", votes: 130, color: "#B8E1FF" },
+    ]
+  },
+  GSS: {
+    name: "GSS",
+    candidates: [
+      { id: "9", name: "Candidate 9", votes: 170, color: "#FED1EF" },
+      { id: "10", name: "Candidate 10", votes: 110, color: "#C5A3FF" },
+    ]
+  }
+};
 
+// Dummy user votes string (1 means voted, 0 means not voted)
+const dummyUserVotes = "10110"; // Example: voted for GS, GSC, GST
 
 const ExitPoll: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState("");
@@ -118,6 +159,10 @@ const ExitPoll: React.FC = () => {
               <CandidateCard name="Samarjit" position="GST" imageUrl="https://res.cloudinary.com/dhry5xscm/image/upload/v1754333130/moodofnits/election_qz1ri3.webp" />
               <button className="text-[#ffffff] bg-[#000000] hover:bg-[#ffffff] hover:text-[#000000] duration-200 border-2 rounded-full px-20 py-2">VOTE</button>
             </div>
+            <PositionDashboard 
+          position={dummyPositions.GS} 
+          userVotes={dummyUserVotes}
+        />
           </div>
         </div>
         <div className="flex flex-col items-center justify-center">
@@ -134,6 +179,10 @@ const ExitPoll: React.FC = () => {
               <button className="text-[#ffffff] bg-[#000000] hover:bg-[#ffffff] hover:text-[#000000] duration-200 border-2 rounded-full px-20 py-2">VOTE</button>
             </div>
           </div>
+             <PositionDashboard 
+          position={dummyPositions.GS} 
+          userVotes={dummyUserVotes}
+        />
         </div>
       </div>
       <style jsx>{`
