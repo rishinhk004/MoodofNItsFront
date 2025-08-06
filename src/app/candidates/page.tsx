@@ -6,7 +6,7 @@ const CandidatesPage: React.FC = () => {
     <div className="min-h-screen w-full flex flex-col items-center justify-start bg-black px-4 py-8">
       <h1 className="text-3xl font-bold text-white mb-8 text-center">Candidates for GST</h1>
       {/* CandidateCard Section */}
-      <div className="mt-6 flex flex-row items-center gap-8">
+      <div className="mt-6 flex flex-col gap-8 sm:flex-row sm:items-center">
         <CandidateCard
           name="Tamaghna Kr Bora"
           position="General Secretary (Technical)"

@@ -13,29 +13,38 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
   imageUrl,
 }) => {
   return (
-    <div className="m-4 w-72 rounded-2xl border border-gray-700 bg-[#1c1c1e] text-white shadow-md transition hover:shadow-lg">
-      {/* Image Section with Padding */}
-      <div className="p-4 pb-0">
+    // Mobile-first: horizontal layout by default
+    // sm breakpoint: switches to a vertical layout
+    <div
+      className="m-4 flex max-w-lg items-center rounded-2xl border border-gray-700 bg-[#1c1c1e] text-white shadow-md transition hover:shadow-lg
+                 sm:w-72 sm:flex-col sm:max-w-none"
+    >
+      {/* Image Container */}
+      <div className="flex-shrink-0 p-3 sm:w-full sm:p-4 sm:pb-0">
         {imageUrl ? (
           <img
             src={imageUrl}
             alt={name}
-            className="w-full aspect-square object-cover rounded-xl"
+            // Mobile: fixed size square. Desktop: responsive square.
+            className="h-24 w-24 rounded-xl object-cover sm:h-auto sm:w-full sm:aspect-square"
           />
         ) : (
-          <div className="w-full aspect-square rounded-xl bg-gray-700 flex items-center justify-center text-3xl font-semibold">
-            {name[0]}
+          <div
+            className="flex h-24 w-24 items-center justify-center rounded-xl bg-gray-700 text-3xl font-semibold 
+                       sm:h-auto sm:w-full sm:aspect-square"
+          >
+            {name.charAt(0)}
           </div>
         )}
       </div>
 
       {/* Info Section */}
-      <div className="px-5 py-4 text-center space-y-1">
-        <h2 className="text-lg font-semibold break-words">
-          <span className="text-gray-400 font-normal">Name:</span> {name}
+      <div className="flex-grow px-4 py-2 text-left sm:w-full sm:px-5 sm:py-4 sm:text-center">
+        <h2 className="truncate text-lg font-semibold sm:whitespace-normal">
+          {name}
         </h2>
-        <p className="text-sm text-gray-400 break-words">
-          <span className="font-normal">Post:</span> {position}
+        <p className="truncate text-sm text-gray-400 sm:whitespace-normal">
+          {position}
         </p>
       </div>
     </div>
