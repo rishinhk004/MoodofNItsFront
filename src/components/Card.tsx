@@ -1,16 +1,18 @@
 "use client";
 import React from "react";
-import { Heart } from "lucide-react";
+import { Heart, User, Calendar, MessageCircle } from "lucide-react";
 
 interface CardProps {
   title: string;
   description: string;
   imageUrl?: string;
   likes: number;
+  commentCount?: number;
   likedByCurrentUser: boolean;
   onLike: () => void;
   author?: string;
   date?: string;
+  isAuthenticated?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -18,56 +20,102 @@ const Card: React.FC<CardProps> = ({
   description,
   imageUrl,
   likes,
+  commentCount,
   likedByCurrentUser,
   onLike,
   author,
   date = new Date().toISOString(),
+  isAuthenticated = true,
 }) => {
   const formattedDate = new Date(date ?? "").toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
   });
-  console.log(description,likedByCurrentUser);
+
   return (
-    <div className="m-5 h-[20rem] lg:h-[30rem] w-[20rem] lg:w-[30rem] overflow-hidden rounded-xl border border-gray-700 bg-[#1c1c1e] text-white shadow-lg">
-
-
-      
-      {/* Top Section (Author + Like) */}
-      <div className="flex items-center justify-between p-4">
-        <div>
-          <p className="text-sm text-white-400">
-            <span className="text-sm text-gray-400 font-normal">Author:</span>{' '}
-            <span className="font-semibold">{author}</span>
-          </p>
-          <p className="text-xs text-gray-400">Date: {formattedDate}</p>
+    <div className="group relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300">
+      {/* Header */}
+      <div className="p-6 pb-4">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1 min-w-0">
+            <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
+              {title}
+            </h3>
+            <div className="flex items-center gap-4 text-sm text-gray-400">
+              <div className="flex items-center gap-1">
+                <User size={14} />
+                <span className="truncate">{author}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Calendar size={14} />
+                <span>{formattedDate}</span>
+              </div>
+            </div>
+          </div>
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              onLike();
+            }} 
+            className={`flex-shrink-0 ml-4 p-2 rounded-lg transition-colors ${
+              isAuthenticated 
+                ? "hover:bg-white/10" 
+                : "hover:bg-white/5 cursor-pointer"
+            }`}
+            title={!isAuthenticated ? "Login to like this post" : ""}
+          >
+            <Heart
+              size={20}
+              className={`transition-all duration-200 ${
+                likedByCurrentUser 
+                  ? "fill-red-500 text-red-500 scale-110" 
+                  : isAuthenticated
+                    ? "text-gray-400 group-hover:text-red-400"
+                    : "text-gray-500 group-hover:text-gray-400"
+              }`}
+            />
+          </button>
         </div>
-        <button onClick={onLike} className="mt-1 transition hover:scale-110">
-          <Heart
-            size={22}
-            className={
-              likedByCurrentUser ? "fill-red-500 text-red-500" : "text-gray-400"
-            }
-          />
-        </button>
       </div>
 
-      {/* Image or Placeholder */}
+      {/* Image */}
       {imageUrl && (
-      <div className="mb-2 h-[140px] lg:h-[300px] w-full overflow-hidden rounded-lg bg-gray-800 flex items-center justify-center">
-          <img
-            src={imageUrl}
-            alt="Post"
-            className="w-[60%] h-[100%] object-conntain transition duration-300 hover:scale-105"
-          /> 
-      </div>
+        <div className="px-6 pb-4">
+          <div className="relative overflow-hidden rounded-xl bg-white/5">
+            <img
+              src={imageUrl}
+              alt="Post"
+              className="w-full max-h-96 object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        </div>
       )}
 
-      {/* Body */}
-      <div className="p-4 pt-0 flex flex-col justify-between space-y-2 text-sm text-gray-300">
-        <p className="line-clamp-3">{description}</p>
-        <p className="text-xs text-gray-400">Likes: {likes}</p>
+      {/* Content */}
+      <div className="px-6 pb-6">
+        <p className="text-gray-300 line-clamp-3 mb-4 leading-relaxed">
+          {description}
+        </p>
+        
+        {/* Footer */}
+        <div className="flex items-center justify-between pt-4 border-t border-white/10">
+          <div className="flex items-center gap-4 text-sm text-gray-400">
+            <div className="flex items-center gap-1">
+              <Heart size={14} className={likedByCurrentUser ? "fill-red-500 text-red-500" : ""} />
+              <span>{likes} like{likes !== 1 ? 's' : ''}</span>
+            </div>
+            {commentCount !== undefined && (
+              <div className="flex items-center gap-1">
+                <MessageCircle size={14} />
+                <span>{commentCount} comment{commentCount !== 1 ? 's' : ''}</span>
+              </div>
+            )}
+          </div>
+          <div className="text-xs text-gray-500">
+            Click to view details
+          </div>
+        </div>
       </div>
     </div>
   );

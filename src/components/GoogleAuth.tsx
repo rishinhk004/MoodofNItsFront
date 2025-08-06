@@ -12,8 +12,12 @@ import type { AxiosError } from "axios";
 import { env } from "~/env";
 import { useRouter } from "next/navigation";
 
-const GoogleLogin = () => {
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+interface GoogleLoginProps {
+  onUsernameSaved?: () => void;
+}
+
+const GoogleLogin = ({ onUsernameSaved }: GoogleLoginProps) => {
+  const [signInWithGoogle, , loading, error] = useSignInWithGoogle(auth);
   const [_user] = useAuthState(auth);
   const [token, setToken] = useState<string | null>(null);
   const [showUsernamePrompt, setShowUsernamePrompt] = useState(false);
@@ -32,7 +36,11 @@ const GoogleLogin = () => {
           headers: { Authorization: `Bearer ${firebaseToken}` },
         });
         toast.success(`Welcome back, ${result.user.displayName ?? "User"}!`);
-        router.push("/");
+        if (onUsernameSaved) {
+          onUsernameSaved();
+        } else {
+          router.push("/");
+        }
       } catch (err: unknown) {
         if (
           typeof err === "object" &&
@@ -67,7 +75,11 @@ const GoogleLogin = () => {
 
       toast.success("Account created successfully!");
       setShowUsernamePrompt(false);
-      router.push("/");
+      if (onUsernameSaved) {
+        onUsernameSaved();
+      } else {
+        router.push("/");
+      }
     } catch (err: unknown) {
       toast.error(
         err instanceof Error ? err.message : "Failed to create account",
@@ -77,37 +89,51 @@ const GoogleLogin = () => {
 
   return (
     <div className="space-y-4">
-      {!_user && <Button
-        onClick={handleGoogleSignIn}
-        disabled={loading}
-        className="bg-white text-black border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-      >
-        <FcGoogle className="text-xl" />
-        {loading ? "Signing in..." : "Continue with Google"}
-      </Button>}
+      {!_user && (
+        <Button
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          className="bg-white text-black border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        >
+          <FcGoogle className="text-xl" />
+          {loading ? "Signing in..." : "Continue with Google"}
+        </Button>
+      )}
+
+      {_user && !showUsernamePrompt && (
+        <Button
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          className="bg-white text-black border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        >
+          <FcGoogle className="text-xl" />
+          Set Username
+        </Button>
+      )}
 
       {error && <p className="mt-2 text-red-500">{error.message}</p>}
 
       {showUsernamePrompt && (
         <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-sm w-full space-y-4 border border-gray-700">
           <h2 className="text-lg font-semibold text-white text-center">Choose an anonymous nickname</h2>
-          {showUsernamePrompt && (
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-sm w-full space-y-4 border border-gray-700">
-              <h2 className="text-lg font-semibold text-white text-center">Choose an anonymous nickname</h2>
-              <Input
-                placeholder="Enter an anonymous username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="bg-gray-800 text-white border border-gray-600 placeholder-gray-400 focus:border-white focus:ring-white rounded-md px-4 py-2"
-              />
-              <Button
-                onClick={handleUsernameSubmit}
-                className="w-full bg-black hover:bg-black text-white font-medium py-2 px-4 rounded-md transition duration-200"
-              >
-                Create Account
-              </Button>
-            </div>
-          )}
+          <Input
+            placeholder="Enter an anonymous username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                void handleUsernameSubmit();
+              }
+            }}
+            className="bg-gray-800 text-white border border-gray-600 placeholder-gray-400 focus:border-white focus:ring-white rounded-md px-4 py-2"
+          />
+          <Button
+            onClick={handleUsernameSubmit}
+            disabled={!username.trim()}
+            className="w-full bg-black hover:bg-black text-white font-medium py-2 px-4 rounded-md transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Create Account
+          </Button>
         </div>
       )}
     </div>
