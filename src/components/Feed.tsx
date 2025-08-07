@@ -84,9 +84,15 @@ const PostSkeleton = () => (
       
       {/* Footer Skeleton */}
       <div className="flex items-center justify-between pt-4 border-t border-white/10">
-        <div className="flex items-center gap-2">
-          <div className="h-4 w-4 bg-white/10 rounded"></div>
-          <div className="h-4 bg-white/10 rounded w-12"></div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1">
+            <div className="h-4 w-4 bg-white/10 rounded"></div>
+            <div className="h-4 bg-white/10 rounded w-12"></div>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="h-4 w-4 bg-white/10 rounded"></div>
+            <div className="h-4 bg-white/10 rounded w-16"></div>
+          </div>
         </div>
         <div className="h-3 bg-white/10 rounded w-24"></div>
       </div>
@@ -97,43 +103,28 @@ const PostSkeleton = () => (
 const FeedSkeleton = () => (
   <div className="min-h-screen w-full bg-black">
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Create Post Section Skeleton */}
+      {/* Header Section Skeleton */}
       <div className="mb-8 sm:mb-12">
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 sm:mb-8 text-center">
-            <div className="h-8 bg-white/10 rounded w-48 mx-auto mb-2"></div>
-            <div className="h-4 bg-white/10 rounded w-64 mx-auto"></div>
+            <div className="h-8 bg-white/10 rounded w-48 mx-auto mb-2 animate-pulse"></div>
+            <div className="h-4 bg-white/10 rounded w-64 mx-auto animate-pulse"></div>
           </div>
           
-          <div className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 p-6 sm:p-8">
-            <div className="space-y-6">
-              {/* Title Skeleton */}
-              <div>
-                <div className="h-4 bg-white/10 rounded w-16 mb-3"></div>
-                <div className="h-10 bg-white/10 rounded"></div>
-              </div>
+          {/* Create Post Button Skeleton */}
+          <div className="flex justify-center mb-6">
+            <div className="h-12 bg-white/10 rounded-full w-48 animate-pulse"></div>
+          </div>
+        </div>
+      </div>
 
-              {/* Description Skeleton */}
-              <div>
-                <div className="h-4 bg-white/10 rounded w-24 mb-3"></div>
-                <div className="h-32 bg-white/10 rounded"></div>
-              </div>
-
-              {/* Type Skeleton */}
-              <div>
-                <div className="h-4 bg-white/10 rounded w-20 mb-3"></div>
-                <div className="h-10 bg-white/10 rounded"></div>
-              </div>
-
-              {/* File Upload Skeleton */}
-              <div>
-                <div className="h-4 bg-white/10 rounded w-24 mb-3"></div>
-                <div className="h-12 bg-white/10 rounded border border-dashed border-white/20"></div>
-              </div>
-
-              {/* Button Skeleton */}
-              <div className="h-12 bg-white/10 rounded"></div>
-            </div>
+      {/* Filters Section Skeleton */}
+      <div className="mb-8">
+        <div className="flex justify-center">
+          <div className="flex gap-2">
+            {Array.from({ length: 4 }, (_, index) => (
+              <div key={index} className="h-10 bg-white/10 rounded-lg w-20 animate-pulse"></div>
+            ))}
           </div>
         </div>
       </div>
@@ -142,17 +133,22 @@ const FeedSkeleton = () => (
       <div className="space-y-6 sm:space-y-8">
         <div className="text-center mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-2">
-            <div className="h-5 w-5 bg-white/10 rounded"></div>
-            <div className="h-6 bg-white/10 rounded w-32"></div>
+            <div className="h-5 w-5 bg-white/10 rounded animate-pulse"></div>
+            <div className="h-6 bg-white/10 rounded w-32 animate-pulse"></div>
           </div>
-          <div className="h-4 bg-white/10 rounded w-48 mx-auto mt-2"></div>
+          <div className="h-4 bg-white/10 rounded w-48 mx-auto mt-2 animate-pulse"></div>
         </div>
 
         {/* Posts Grid Skeleton */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {Array.from({ length: 6 }, (_, index) => (
+          {Array.from({ length: 9 }, (_, index) => (
             <PostSkeleton key={index} />
           ))}
+        </div>
+
+        {/* Load More Button Skeleton */}
+        <div className="flex justify-center mt-8">
+          <div className="h-12 bg-white/10 rounded-lg w-32 animate-pulse"></div>
         </div>
       </div>
     </div>
@@ -167,7 +163,6 @@ const PostPage = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showCreatePostOverlay, setShowCreatePostOverlay] = useState(false);
-  const [showCreatePostSection, setShowCreatePostSection] = useState(false);
   const [hasCompletedUsernameSetup, setHasCompletedUsernameSetup] = useState(false);
   const [user] = useAuthState(auth);
   const router = useRouter();
@@ -176,10 +171,10 @@ const PostPage = () => {
 
   // If user is authenticated, assume they have completed username setup
   useEffect(() => {
-    console.log("Feed useEffect - user:", user, "hasCompletedUsernameSetup:", hasCompletedUsernameSetup, "showCreatePostSection:", showCreatePostSection);
+    console.log("Feed useEffect - user:", user, "hasCompletedUsernameSetup:", hasCompletedUsernameSetup);
     // Don't automatically assume they have completed setup
     // Let the GoogleAuth component handle this
-  }, [user, hasCompletedUsernameSetup, showCreatePostSection]);
+  }, [user, hasCompletedUsernameSetup]);
 
   const API: AxiosInstance = axios.create({
     baseURL: `${env.NEXT_PUBLIC_API_URL}`,
@@ -392,7 +387,6 @@ const PostPage = () => {
           });
           console.log("User exists in backend, showing create post form");
           setHasCompletedUsernameSetup(true);
-          setShowCreatePostSection(true);
         } catch (err: unknown) {
           if (
             typeof err === "object" &&
@@ -413,7 +407,6 @@ const PostPage = () => {
       console.log("User logged out, clearing posts");
       setPosts([]);
       setHasCompletedUsernameSetup(false);
-      setShowCreatePostSection(false);
     }
   }, [user]); // Refresh when user state changes
 
@@ -511,7 +504,7 @@ const PostPage = () => {
     <div className="min-h-screen w-full bg-black">
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Create Post Section */}
-        {((user && hasCompletedUsernameSetup) ?? false) || showCreatePostSection ? (
+        {user && hasCompletedUsernameSetup ? (
           <div className="mb-4 sm:mb-8">
             <div className="mx-auto max-w-2xl">
               <div className="mb-4 sm:mb-6 text-center">

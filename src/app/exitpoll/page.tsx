@@ -11,6 +11,60 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { PositionDashboard } from "~/components/PollChart";
 import GoogleAuth from "~/components/GoogleAuth";
 
+// Skeleton Components
+const CandidateCardSkeleton = () => (
+  <div className="m-4 flex max-w-lg items-center rounded-2xl border border-gray-700 bg-[#1c1c1e] text-white shadow-md animate-pulse sm:w-72 sm:flex-col sm:max-w-none">
+    {/* Image Container Skeleton */}
+    <div className="flex-shrink-0 p-3 sm:w-full sm:p-4 sm:pb-0">
+      <div className="h-24 w-24 rounded-xl bg-white/10 sm:h-auto sm:w-full sm:aspect-square"></div>
+    </div>
+
+    {/* Info Section Skeleton */}
+    <div className="flex-grow px-4 py-2 text-left sm:w-full sm:px-5 sm:py-4 sm:text-center">
+      <div className="h-5 bg-white/10 rounded w-24 mb-2"></div>
+      <div className="h-4 bg-white/10 rounded w-16"></div>
+    </div>
+  </div>
+);
+
+const PositionSkeleton = () => (
+  <div className="w-full my-10 translate-y-10">
+    {/* Position Title Skeleton */}
+    <div className="h-10 bg-white/10 rounded w-32 mx-auto mb-6 animate-pulse"></div>
+
+    {/* Chart Skeleton */}
+    <div className="mb-10">
+      <div className="h-64 bg-white/10 rounded-lg animate-pulse"></div>
+    </div>
+
+    {/* Candidates Grid Skeleton */}
+    <div className="flex flex-row flex-wrap justify-center gap-6">
+      {Array.from({ length: 4 }, (_, index) => (
+        <div key={index} className="flex flex-col items-center justify-center">
+          <CandidateCardSkeleton />
+          <div className="mt-2 h-10 bg-white/10 rounded-full w-20 animate-pulse"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const ExitPollSkeleton = () => (
+  <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 text-white relative">
+    {/* Back Button Skeleton */}
+    <div className="absolute top-6 left-4 sm:left-20">
+      <div className="h-10 bg-white/10 rounded-md w-32 animate-pulse"></div>
+    </div>
+
+    {/* Main Content Skeleton */}
+    <div className="w-full">
+      {Array.from({ length: 5 }, (_, index) => (
+        <PositionSkeleton key={index} />
+      ))}
+    </div>
+  </div>
+);
+
 // --- ALL REQUIRED INTERFACES ---
 interface User {
   id: string;
@@ -152,8 +206,6 @@ const ExitPoll: React.FC = () => {
 
 
   if (!user) {
-   
-
     return (
       <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 text-white relative">
         <Link href="/" className="absolute top-6 left-4 sm:left-20">
@@ -175,11 +227,7 @@ const ExitPoll: React.FC = () => {
   }
 
   if (user && loading) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center text-white text-4xl font-mono font-bold">
-        Loading...
-      </div>
-    );
+    return <ExitPollSkeleton />;
   }
 
 

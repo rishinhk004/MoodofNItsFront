@@ -5,6 +5,10 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  images: {
+    domains: ['res.cloudinary.com', 'moodofnits2.s3.us-east-1.amazonaws.com'],
+  },
+};
 
 export default config;
