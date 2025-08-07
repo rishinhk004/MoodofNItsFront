@@ -28,9 +28,9 @@ const Card: React.FC<CardProps> = ({
     month: "short",
     year: "numeric",
   });
-
+  console.log(description,likedByCurrentUser);
   return (
-    <div className="mx-auto w-[200px] overflow-hidden rounded-xl border border-gray-700 bg-[#1c1c1e] text-white shadow-lg">
+    <div className="m-5 h-[20rem] lg:h-[30rem] w-[20rem] lg:w-[30rem] overflow-hidden rounded-xl border border-gray-700 bg-[#1c1c1e] text-white shadow-lg">
 
 
       
@@ -55,11 +55,11 @@ const Card: React.FC<CardProps> = ({
 
       {/* Image or Placeholder */}
       {imageUrl && (
-      <div className="mb-2 h-40 w-full overflow-hidden rounded-lg bg-gray-800 flex items-center justify-center">
+      <div className="mb-2 h-[140px] lg:h-[300px] w-full overflow-hidden rounded-lg bg-gray-800 flex items-center justify-center">
           <img
             src={imageUrl}
             alt="Post"
-            className="h-full w-full object-cover transition duration-300 hover:scale-105"
+            className="w-[60%] h-[100%] object-conntain transition duration-300 hover:scale-105"
           /> 
       </div>
       )}
