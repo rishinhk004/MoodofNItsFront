@@ -78,7 +78,6 @@ const GoogleLogin = () => {
     void checkUserInDatabase();
   }, [_user]);
 
-  // 3. Handle username creation if user is new
   const handleUsernameSubmit = async () => {
     if (!username.trim()) {
       toast.error("Username cannot be empty");
