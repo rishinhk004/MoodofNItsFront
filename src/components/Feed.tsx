@@ -36,6 +36,16 @@ interface ApiResponse<T> {
   msg: T;
 }
 
+interface Comment {
+  id: string;
+  content: string;
+  createdAt: string;
+  author: {
+    username: string;
+  };
+  replies?: Comment[];
+}
+
 // Skeleton Components
 const PostSkeleton = () => (
   <div className="group relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 animate-pulse">
@@ -162,12 +172,7 @@ const PostPage = () => {
   const [user] = useAuthState(auth);
   const router = useRouter();
 
-  const handleUsernameSaved = () => {
-    console.log("handleUsernameSaved called - setting showCreatePostSection to true");
-    setShowCreatePostSection(true);
-    setHasCompletedUsernameSetup(true);
-    console.log("State updated - showCreatePostSection: true, hasCompletedUsernameSetup: true");
-  };
+
 
   // If user is authenticated, assume they have completed username setup
   useEffect(() => {
@@ -205,18 +210,56 @@ const PostPage = () => {
           postId: post.id,
           title: post.title,
           likedByCurrentUser: processedPost.likedByCurrentUser,
-          likes: processedPost.likes
+          likes: processedPost.likes,
+          commentCount: processedPost.commentCount
         });
         return processedPost;
       });
       
       console.log("Final posts with processed like states:", postsWithLikeStates);
-      setPosts(postsWithLikeStates);
+      
+      // Fetch comment counts first, then set posts with complete data
+      const postsWithCommentCounts = await fetchCommentCounts(postsWithLikeStates);
+      setPosts(postsWithCommentCounts);
     } catch (error) {
       console.error("Error fetching posts:", error);
       toast.error("Failed to fetch posts");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchCommentCounts = async (posts: Post[]): Promise<Post[]> => {
+    try {
+      console.log("Fetching comment counts for posts...");
+      
+      // Fetch comment counts for each post
+      const postsWithCommentCounts = await Promise.all(
+        posts.map(async (post) => {
+          try {
+            const { data } = await API.get<ApiResponse<Comment[]>>(`/comments/${post.id}`);
+            const commentCount = data.msg?.length ?? 0;
+            console.log(`Post ${post.id} comment count:`, commentCount);
+            
+            return {
+              ...post,
+              commentCount
+            };
+          } catch (error) {
+            console.error(`Error fetching comments for post ${post.id}:`, error);
+            return {
+              ...post,
+              commentCount: 0
+            };
+          }
+        })
+      );
+      
+      console.log("Updated posts with comment counts:", postsWithCommentCounts);
+      return postsWithCommentCounts;
+    } catch (error) {
+      console.error("Error fetching comment counts:", error);
+      return posts; // Return original posts if comment fetching fails
     }
   };
 
@@ -395,8 +438,11 @@ const PostPage = () => {
         return processedPost;
       });
       
-      setPosts(postsWithFreshLikeStates);
       console.log("All post like states refreshed from database:", postsWithFreshLikeStates);
+      
+      // Also refresh comment counts
+      const postsWithCommentCounts = await fetchCommentCounts(postsWithFreshLikeStates);
+      setPosts(postsWithCommentCounts);
     } catch (error) {
       console.error("Error refreshing post like states:", error);
     }

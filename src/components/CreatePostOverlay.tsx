@@ -107,7 +107,7 @@ const CreatePostOverlay: React.FC<CreatePostOverlayProps> = ({
       />
       
       {/* Modal */}
-      <div className="relative bg-gray-900/95 backdrop-blur-md border border-white/10 rounded-2xl p-6 sm:p-8 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-black border border-white/10 rounded-2xl p-6 sm:p-8 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white">Create Post</h2>
