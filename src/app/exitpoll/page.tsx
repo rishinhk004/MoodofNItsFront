@@ -149,7 +149,15 @@ const ExitPoll: React.FC = () => {
   };
 
 
+
   if (!user) {
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }, []);
+
     return (
       <div className="flex h-screen w-full items-center justify-center text-white text-3xl font-mono font-bold">
         Please Login to participate in the ExitPoll!!
@@ -230,8 +238,8 @@ const ExitPoll: React.FC = () => {
                     disabled={hasVoted}
                     onClick={() => handleVote(cand.id, cand.designation)}
                     className={`mt-2 text-white border-2 rounded-full px-6 py-2 duration-200 ${hasVoted
-                        ? "bg-gray-600 cursor-not-allowed"
-                        : "bg-black hover:bg-white hover:text-black"
+                      ? "bg-gray-600 cursor-not-allowed"
+                      : "bg-black hover:bg-white hover:text-black"
                       }`}
                   >
                     {hasVoted ? "VOTED" : "VOTE"}

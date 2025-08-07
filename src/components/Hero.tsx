@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
                     className="h-[1rem] w-[1rem] md:h-[1.5rem] md:w-[1.5rem]"
                   />
                 </div>
-                <p className="text-lg md:text-xl">Exit Polls</p>
+                <p className="text-lg md:text-xl font-serif"> Click to Enter Exit Polls</p>
               </button>
             </Link>
           </div>
