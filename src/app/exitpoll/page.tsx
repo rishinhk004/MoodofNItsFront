@@ -150,7 +150,15 @@ const ExitPoll: React.FC = () => {
   };
 
 
+
   if (!user) {
+    useEffect(() => {
+      const timeout = setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }, []);
+
     return (
       <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 text-white relative">
         <Link href="/" className="absolute top-6 left-4 sm:left-20">
@@ -244,8 +252,8 @@ const ExitPoll: React.FC = () => {
                     disabled={hasVoted}
                     onClick={() => handleVote(cand.id, cand.designation)}
                     className={`mt-2 text-white border-2 rounded-full px-6 py-2 duration-200 ${hasVoted
-                        ? "bg-gray-600 cursor-not-allowed"
-                        : "bg-black hover:bg-white hover:text-black"
+                      ? "bg-gray-600 cursor-not-allowed"
+                      : "bg-black hover:bg-white hover:text-black"
                       }`}
                   >
                     {hasVoted ? "VOTED" : "VOTE"}
