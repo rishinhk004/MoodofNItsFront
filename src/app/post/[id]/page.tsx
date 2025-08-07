@@ -7,6 +7,7 @@ import { env } from "~/env";
 import { auth } from "~/lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { MessageCircle, Send, User, Calendar, Heart, TrendingUp, Clock, Star } from "lucide-react";
+import Image from "next/image";
 
 export const runtime = "edge";
 
@@ -460,9 +461,11 @@ const PostPage = ({ params }: PostProps) => {
                     {/* Post Image - Fixed Height */}
                     {post.imageUrl ? (
                       <div className="h-[50%] relative">
-                        <img
+                        <Image
                           src={post.imageUrl}
                           alt="Post"
+                          width={800}
+                          height={600}
                           className="w-full h-[100%] object-contain"
                         />
                       </div>

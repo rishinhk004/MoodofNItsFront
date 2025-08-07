@@ -172,12 +172,7 @@ const PostPage = () => {
   const [user] = useAuthState(auth);
   const router = useRouter();
 
-  const handleUsernameSaved = () => {
-    console.log("handleUsernameSaved called - setting showCreatePostSection to true");
-    setShowCreatePostSection(true);
-    setHasCompletedUsernameSetup(true);
-    console.log("State updated - showCreatePostSection: true, hasCompletedUsernameSetup: true");
-  };
+
 
   // If user is authenticated, assume they have completed username setup
   useEffect(() => {

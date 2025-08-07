@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import axios from "axios";
 import type { AxiosError } from "axios";
 import { env } from "~/env";
-import { useRouter } from "next/navigation";
 
 const GoogleLogin = () => {
   const [signInWithGoogle, , loading, error] = useSignInWithGoogle(auth);
@@ -18,7 +17,7 @@ const GoogleLogin = () => {
   const [token, setToken] = useState<string | null>(null);
   const [showUsernamePrompt, setShowUsernamePrompt] = useState(false);
   const [username, setUsername] = useState("");
-  const router = useRouter();
+
 
   const handleGoogleSignIn = async () => {
     try {

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Heart, User, Calendar, MessageCircle } from "lucide-react";
+import Image from "next/image";
 
 interface CardProps {
   title: string;
@@ -83,9 +84,11 @@ const Card: React.FC<CardProps> = ({
       {imageUrl && (
         <div className="px-6 pb-4">
           <div className="relative overflow-hidden rounded-xl bg-white/5">
-            <img
+            <Image
               src={imageUrl}
               alt="Post"
+              width={400}
+              height={300}
               className="w-full max-h-96 object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </div>

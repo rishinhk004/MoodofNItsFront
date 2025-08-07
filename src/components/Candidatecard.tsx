@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 interface CandidateCardProps {
   name: string;
@@ -20,9 +21,11 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
       {/* Image Container */}
       <div className="flex-shrink-0 p-3 sm:w-full sm:p-4 sm:pb-0">
         {imageUrl ? (
-          <img
+          <Image
             src={imageUrl}
             alt={name}
+            width={96}
+            height={96}
             // Mobile: fixed size square. Desktop: responsive square.
             className="h-24 w-24 rounded-xl object-cover sm:h-auto sm:w-full sm:aspect-square"
           />

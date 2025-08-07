@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Hero: React.FC = () => {
   return (
@@ -54,9 +55,11 @@ const Hero: React.FC = () => {
             <Link href="/exitpoll">
               <button className="flex flex-row items-center justify-center gap-2 rounded-md bg-black p-1 md:p-4">
                 <div className="flex flex-col items-center justify-center">
-                  <img
+                  <Image
                     src="https://res.cloudinary.com/dz2mlxltd/image/upload/v1754401039/Screenshot_2025-08-05_190704_mjqo14.png"
                     alt="exit poll"
+                    width={24}
+                    height={24}
                     className="h-[1rem] w-[1rem] md:h-[1.5rem] md:w-[1.5rem]"
                   />
                 </div>
