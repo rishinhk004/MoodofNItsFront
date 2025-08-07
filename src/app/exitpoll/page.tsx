@@ -204,8 +204,8 @@ const ExitPoll: React.FC = () => {
         };
 
         return (
-          <div key={position} className="w-full my-10">
-            <h2 className="text-4xl font-bold text-center mb-6 font-mono">{position}</h2>
+          <div key={position} className="w-full my-10 translate-y-10">
+            <h2 className="text-4xl font-bold text-center mb-6 font-serif">{position}</h2>
 
             {group.length > 0 && (
               <div className="mb-10">

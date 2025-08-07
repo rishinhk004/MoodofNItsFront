@@ -13,8 +13,6 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
   imageUrl,
 }) => {
   return (
-    // Mobile-first: horizontal layout by default
-    // sm breakpoint: switches to a vertical layout
     <div
       className="m-4 flex max-w-lg items-center rounded-2xl border border-gray-700 bg-[#1c1c1e] text-white shadow-md transition hover:shadow-lg
                  sm:w-72 sm:flex-col sm:max-w-none"
@@ -40,10 +38,10 @@ const CandidateCard: React.FC<CandidateCardProps> = ({
 
       {/* Info Section */}
       <div className="flex-grow px-4 py-2 text-left sm:w-full sm:px-5 sm:py-4 sm:text-center">
-        <h2 className="truncate text-lg font-semibold sm:whitespace-normal">
+        <h2 className="truncate text-sm md:text-lg font-semibold sm:whitespace-normal font-sans">
           {name}
         </h2>
-        <p className="truncate text-sm text-gray-400 sm:whitespace-normal">
+        <p className="truncate text-sm text-gray-400 sm:whitespace-normal font-serif">
           {position}
         </p>
       </div>
