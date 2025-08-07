@@ -9,6 +9,7 @@ import type { AxiosError } from "axios";
 import { auth } from "~/lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { PositionDashboard } from "~/components/PollChart";
+import GoogleAuth from "~/components/GoogleAuth";
 
 // --- ALL REQUIRED INTERFACES ---
 interface User {
@@ -151,8 +152,21 @@ const ExitPoll: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="flex h-screen w-full items-center justify-center text-white text-3xl font-mono font-bold">
-        Please Login to participate in the ExitPoll!!
+      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 text-white relative">
+        <Link href="/" className="absolute top-6 left-4 sm:left-20">
+          <span className="flex items-center gap-2 rounded-md bg-blue/60 hover:bg-black/80 px-4 py-2 text-sm font-semibold shadow transition border border-white/50">
+            ← Back to Home
+          </span>
+        </Link>
+        
+        <div className="text-center space-y-8">
+          <h1 className="text-4xl font-bold font-serif mb-4">Exit Poll 2025</h1>
+          <p className="text-xl text-gray-300 mb-8">Please login to participate in the Exit Poll</p>
+          
+          <div className="flex justify-center">
+            <GoogleAuth />
+          </div>
+        </div>
       </div>
     );
   }
@@ -182,7 +196,7 @@ const ExitPoll: React.FC = () => {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 text-white relative">
-      <Link href="/" className="absolute top-6 left-20">
+      <Link href="/" className="absolute top-6 left-4 sm:left-20">
         <span className="flex items-center gap-2 rounded-md bg-blue/60 hover:bg-black/80 px-4 py-2 text-sm font-semibold shadow transition border border-white/50">
           ← Back to Home
         </span>

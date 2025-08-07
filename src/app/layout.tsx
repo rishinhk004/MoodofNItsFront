@@ -71,7 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`font-sans ${inter.variable} font-inter flex min-h-screen flex-col bg-black text-white`}
+        className={`${inter.variable} flex min-h-screen flex-col bg-black text-white`}
       >
         <Navbar />
         <main role="main">{children}</main>
