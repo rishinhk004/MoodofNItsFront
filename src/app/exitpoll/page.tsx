@@ -116,40 +116,42 @@ const ExitPoll: React.FC = () => {
       return;
     }
 
-    try {
+    const voteForCandidate = async () => {
       const API = await getAPI();
-      const res = await API.post("/vote", {
-        candidateId,
-      });
+      await API.post("/vote", { candidateId });
 
-      if (res.status === 200) {
-        // 1. Update the user's voting status
-        const newVotes = userData.votes.split("");
-        newVotes[idx] = "1";
-        setUserData({ ...userData, votes: newVotes.join("") });
+      // 1. Update the user's voting status
+      const newVotes = userData.votes.split("");
+      newVotes[idx] = "1";
+      setUserData({ ...userData, votes: newVotes.join("") });
 
-        // 2. Update the local candidates' vote counts to re-render the chart
-        setCandidates(prevCandidates =>
-          prevCandidates.map(candidate => {
-            if (candidate.id === candidateId) {
-              const newVoteCount = (parseInt(candidate.votes, 10) + 1).toString();
-              return { ...candidate, votes: newVoteCount };
-            }
-            return candidate;
-          })
-        );
-        
-        toast.success(`Voted for ${position} successfully!`);
+      // 2. Update local vote counts to reflect the change
+      setCandidates(prevCandidates =>
+        prevCandidates.map(candidate => {
+          if (candidate.id === candidateId) {
+            const newVoteCount = (parseInt(candidate.votes, 10) + 1).toString();
+            return { ...candidate, votes: newVoteCount };
+          }
+          return candidate;
+        })
+      );
+    };
+
+    toast.promise(
+      voteForCandidate(),
+      {
+        loading: `Voting for ${position}...`,
+        success: `Voted for ${position} successfully!`,
+        error: (err: AxiosError<{ msg: string }>) =>
+          err.response?.data?.msg ?? "Error voting",
       }
-    } catch (err) {
-      const error = err as AxiosError<{ msg: string }>;
-      toast.error(error.response?.data?.msg ?? "Error voting");
-    }
+    );
   };
 
-   if (!user) {
+
+  if (!user) {
     return (
-      <div className="flex h-screen w-full items-center justify-center text-white text-4xl font-mono font-bold">
+      <div className="flex h-screen w-full items-center justify-center text-white text-3xl font-mono font-bold">
         Please Login to participate in the ExitPoll!!
       </div>
     );
@@ -162,7 +164,7 @@ const ExitPoll: React.FC = () => {
       </div>
     );
   }
-  
+
 
   const groupedCandidates: Record<PositionKey, CandidateData[]> = {
     GS: [],
@@ -189,18 +191,18 @@ const ExitPoll: React.FC = () => {
       {Object.entries(groupedCandidates).map(([positionKey, group]) => {
         const position = positionKey as PositionKey;
         const hasVoted = userData?.votes?.[positionIndex[position]] === "1";
-        
+
         const COLOR_PALETTE = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"];
 
         const chartData: ChartPosition = {
-            name: position,
-            candidates: group.map((cand, idx) => ({
-              id: cand.id,
-              name: cand.name,
-              votes: parseInt(cand.votes, 10) || 0,
-              // Add '!' to assert that the value is not undefined
-              color: COLOR_PALETTE[idx % COLOR_PALETTE.length]!,
-            })),
+          name: position,
+          candidates: group.map((cand, idx) => ({
+            id: cand.id,
+            name: cand.name,
+            votes: parseInt(cand.votes, 10) || 0,
+            // Add '!' to assert that the value is not undefined
+            color: COLOR_PALETTE[idx % COLOR_PALETTE.length]!,
+          })),
         };
 
         return (
@@ -212,7 +214,7 @@ const ExitPoll: React.FC = () => {
                 <PositionDashboard position={chartData} userDidVote={hasVoted} />
               </div>
             )}
-            
+
             <div className="flex flex-row flex-wrap justify-center gap-6">
               {group.map((cand) => (
                 <div
@@ -227,11 +229,10 @@ const ExitPoll: React.FC = () => {
                   <button
                     disabled={hasVoted}
                     onClick={() => handleVote(cand.id, cand.designation)}
-                    className={`mt-2 text-white border-2 rounded-full px-6 py-2 duration-200 ${
-                      hasVoted
+                    className={`mt-2 text-white border-2 rounded-full px-6 py-2 duration-200 ${hasVoted
                         ? "bg-gray-600 cursor-not-allowed"
                         : "bg-black hover:bg-white hover:text-black"
-                    }`}
+                      }`}
                   >
                     {hasVoted ? "VOTED" : "VOTE"}
                   </button>

@@ -345,13 +345,13 @@ const PostPage = ({ params }: PostProps) => {
         className="group relative"
         style={{ marginLeft: `${level * 1.5}rem` }}
       >
-        <div className="flex items-start gap-3 py-2">
+        <div className="flex items-start gap-3 py-2 ">
           <div className="flex-shrink-0">
             <div className="h-6 w-6 rounded-full bg-red-500/20 flex items-center justify-center">
               <User size={12} className="text-red-400" />
             </div>
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 ">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-sm font-medium text-white">
                 {comment.author.username}
@@ -452,18 +452,18 @@ const PostPage = ({ params }: PostProps) => {
           </div>
         ) : (
           <div className="mx-auto max-w-5xl">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden min-h-[600px] lg:h-[550px]">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-y-scroll min-h-[600px] lg:h-[600px] scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/30">
               {/* Left Side - Post Image & Text */}
               <div className="lg:border-r border-white/10 h-auto lg:h-full">
                 {post && (
                   <>
                     {/* Post Image - Fixed Height */}
                     {post.imageUrl ? (
-                      <div className="h-1/2 relative">
+                      <div className="h-[50%] relative">
                         <img
                           src={post.imageUrl}
                           alt="Post"
-                          className="w-full h-full"
+                          className="w-full h-[100%] object-contain"
                         />
                       </div>
                     ) : (
@@ -476,7 +476,7 @@ const PostPage = ({ params }: PostProps) => {
                     )}
 
                     {/* Post Text Content - Fixed Height */}
-                    <div className="h-full lg:h-1/2 p-6 border-t border-white/10 flex flex-col">
+                    <div className="h-full lg:h-[50%] p-6 border-t border-white/10 flex flex-col">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1 min-w-0">
                           <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
@@ -531,7 +531,7 @@ const PostPage = ({ params }: PostProps) => {
               {/* Right Side - Comments Only */}
               <div className="flex flex-col h-auto lg:h-full overflow-auto">
                 {/* Comments Header */}
-                <div className="p-4 border-b border-white/10 flex-shrink-0">
+                <div className="p-4 border-b border-white/10">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <MessageCircle size={18} className="text-red-400" />
@@ -577,7 +577,8 @@ const PostPage = ({ params }: PostProps) => {
                 </div>
 
                 {/* Comments List - Scrollable with Custom Scrollbar */}
-                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/30 min-h-0">
+                <div className="border-t border-white/10 w-full" />
+                <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent hover:scrollbar-thumb-white/30">
                   <div className="p-4 space-y-1">
                     {sortedComments.length === 0 ? (
                       <div className="text-center py-8">
@@ -594,7 +595,7 @@ const PostPage = ({ params }: PostProps) => {
 
                 {/* Add Comment Input - Fixed at Bottom */}
                 {user && (
-                  <div className="p-4 border-t border-white/10 flex-shrink-0">
+                  <div className="p-4 border-t border-white/10 flex-none lg:">
                     <div className="space-y-3">
                       <textarea
                         value={newComment}

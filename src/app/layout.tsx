@@ -59,6 +59,7 @@ const toastOps = {
     info: "toast-theme-blue",
     error: "toast-theme-red",
     warning: "toast-theme-red",
+    loading: "toast-theme-blue",
   },
 };
 
