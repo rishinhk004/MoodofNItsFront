@@ -31,7 +31,6 @@ const GoogleLogin = () => {
         await axios.get(`${env.NEXT_PUBLIC_API_URL}/user`, {
           headers: { Authorization: `Bearer ${firebaseToken}` },
         });
-        router.push("/");
       } catch (err: unknown) {
         if (
           typeof err === "object" &&

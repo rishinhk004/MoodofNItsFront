@@ -152,12 +152,7 @@ const ExitPoll: React.FC = () => {
 
 
   if (!user) {
-    useEffect(() => {
-      const timeout = setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
-      return () => clearTimeout(timeout);
-    }, []);
+   
 
     return (
       <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 text-white relative">
