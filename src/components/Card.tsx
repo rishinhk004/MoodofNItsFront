@@ -105,14 +105,12 @@ const Card: React.FC<CardProps> = ({
               <Heart size={14} className={likedByCurrentUser ? "fill-red-500 text-red-500" : ""} />
               <span>{likes} like{likes !== 1 ? 's' : ''}</span>
             </div>
-            {commentCount !== undefined && (
-              <div className="flex items-center gap-1">
-                <MessageCircle size={14} />
-                <span>{commentCount} comment{commentCount !== 1 ? 's' : ''}</span>
-              </div>
-            )}
+            <div className="flex items-center gap-1">
+              <MessageCircle size={14} />
+              <span>{commentCount ?? 0} comment{(commentCount ?? 0) !== 1 ? 's' : ''}</span>
+            </div>
           </div>
-          <div className="text-xs text-gray-500">
+          <div className="text-[10px] text-gray-500">
             Click to view details
           </div>
         </div>
