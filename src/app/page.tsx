@@ -1,6 +1,5 @@
 import React from "react";
 
-import ComingSoonButton from "../components/ComingSoon";
 import Feed from "../components/Feed";
 import Hero from "~/components/Hero";
 import CandidateCard from "../components/Candidatecard";

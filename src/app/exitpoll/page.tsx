@@ -147,13 +147,22 @@ const ExitPoll: React.FC = () => {
     }
   };
 
-  if (loading || !user) {
+   if (!user) {
     return (
-      <div className="flex h-screen w-full items-center justify-center text-white">
+      <div className="flex h-screen w-full items-center justify-center text-white text-4xl font-mono font-bold">
+        Please Login to participate in the ExitPoll!!
+      </div>
+    );
+  }
+
+  if (user && loading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center text-white text-4xl font-mono font-bold">
         Loading...
       </div>
     );
   }
+  
 
   const groupedCandidates: Record<PositionKey, CandidateData[]> = {
     GS: [],
@@ -196,7 +205,7 @@ const ExitPoll: React.FC = () => {
 
         return (
           <div key={position} className="w-full my-10">
-            <h2 className="text-3xl font-bold text-center mb-6">{position}</h2>
+            <h2 className="text-4xl font-bold text-center mb-6 font-mono">{position}</h2>
 
             {group.length > 0 && (
               <div className="mb-10">

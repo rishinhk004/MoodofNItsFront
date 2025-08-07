@@ -1,9 +1,9 @@
 import React from "react";
-import GoogleLogin from "./GoogleAuth";
 import Link from "next/link";
+
 const Hero: React.FC = () => {
   return (
-    <div className="flex min-h-screen w-[100%] flex-col items-center justify-start p-4 lg:justify-center">
+    <div className="flex w-[100%] flex-col items-center justify-start p-4 lg:justify-center">
       <div className="flex min-h-[10vh] w-[100%] flex-col items-center justify-center rounded-[1rem] bg-[url('https://res.cloudinary.com/dz2mlxltd/image/upload/c_crop,w_1080,h_600/v1754403210/gettyimages-1203055296-24bf09b7f849da81487a88f214d6c4188632dbd3_bdapv3.jpg')] bg-cover bg-center bg-no-repeat md:rounded-[4rem] lg:min-h-[80vh]">
         <div
           className="flex min-h-[50vh] w-[100%] flex-col items-center justify-center p-9 lg:min-h-[100vh]"
@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
                 boxShadow: "0 4px 24px 0 rgba(0,0,0,0.25)",
               }}
             >
-              <p className="text-center text-2xl font-bold sm:text-4xl lg:text-left lg:text-6xl text-white">
+              <p className="text-left text-2xl font-bold sm:text-4xl lg:text-6xl text-white">
                 <span
                   style={{
                     fontFamily: "'Great Vibes',cursive",
@@ -37,11 +37,14 @@ const Hero: React.FC = () => {
                 </span>{" "}
                 & Zero Chill
               </p>
-              <div className="flex flex-row items-center gap-4 text-white text-left mt-4">
+              <div className="flex flex-row items-center gap-3 text-white text-left mt-4">
                 <p className="text-xl md:text-xl font-normal">
                   GUB Elections 2025 at NIT Silchar
                 </p>
-                <div className="beep"></div>
+                <div className="relative">
+                  <div className="w-2 h-2 bg-red-500 rounded-full animate-ping shadow-lg shadow-red-500/50"></div>
+                  <div className="absolute inset-0 w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                </div>
               </div>
 
             </div>
@@ -61,9 +64,7 @@ const Hero: React.FC = () => {
               </button>
             </Link>
           </div>
-          <div className="flex w-[100%] items-center justify-center p-4">
-            <GoogleLogin />
-          </div>
+
         </div>
       </div>
     </div>

@@ -60,6 +60,7 @@ const CustomTooltip = (props: CustomTooltipProps) => {
   return null;
 };
 
+// --- COMPONENT ---
 export const PositionDashboard = ({ position, userDidVote }: PositionDashboardProps) => {
   const { sortedCandidates, totalVotes } = useMemo(() => {
     const candidates = [...position.candidates];
