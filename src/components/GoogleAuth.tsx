@@ -20,7 +20,6 @@ const GoogleLogin = () => {
   const [username, setUsername] = useState("");
   const router = useRouter();
 
-  // 1. Sign in handler
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithGoogle();
@@ -28,14 +27,10 @@ const GoogleLogin = () => {
 
       const firebaseToken = await result.user.getIdToken();
       setToken(firebaseToken);
-
-      // Check if user exists in your backend
       try {
         await axios.get(`${env.NEXT_PUBLIC_API_URL}/user`, {
           headers: { Authorization: `Bearer ${firebaseToken}` },
         });
-
-        toast.success(`Welcome back, ${result.user.displayName ?? "User"}!`);
         router.push("/");
       } catch (err: unknown) {
         if (
@@ -56,21 +51,17 @@ const GoogleLogin = () => {
     }
   };
 
-  // 2. Auto check backend after login
+
   useEffect(() => {
     const checkUserInDatabase = async () => {
       if (!_user) return;
-
       const firebaseToken = await _user.getIdToken();
       setToken(firebaseToken);
-
       try {
         await axios.get(`${env.NEXT_PUBLIC_API_URL}/user`, {
           headers: { Authorization: `Bearer ${firebaseToken}` },
         });
-
         toast.success(`Welcome back, ${_user.displayName ?? "User"}!`);
-        router.push("/");
       } catch (err: unknown) {
         if (
           typeof err === "object" &&
@@ -95,7 +86,6 @@ const GoogleLogin = () => {
       toast.error("Username cannot be empty");
       return;
     }
-
     try {
       await axios.post(
         `${env.NEXT_PUBLIC_API_URL}/user`,
@@ -106,10 +96,9 @@ const GoogleLogin = () => {
           },
         }
       );
-
       toast.success("Account created successfully!");
       setShowUsernamePrompt(false);
-      router.push("/");
+      window.location.reload();
     } catch (err: unknown) {
       toast.error(
         err instanceof Error ? err.message : "Failed to create account"
@@ -119,16 +108,19 @@ const GoogleLogin = () => {
 
   return (
     <div className="space-y-4">
-      <Button
-        onClick={handleGoogleSignIn}
-        disabled={loading || !!_user}
-        className="bg-white text-black border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-      >
-        <FcGoogle className="text-xl" />
-        {loading ? "Signing in..." : "Continue with Google"}
-      </Button>
+      {!_user && (
+        <Button
+          onClick={handleGoogleSignIn}
+          disabled={loading || !!_user}
+          className="bg-white text-black border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        >
+          <FcGoogle className="text-xl" />
+          {loading ? "Signing in..." : "Continue with Google"}
+        </Button>
+      )}
 
       {error && <p className="mt-2 text-red-500">{error.message}</p>}
+
       {showUsernamePrompt && (
         <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl shadow-lg max-w-sm w-full space-y-4 border border-gray-700">
           <h2 className="text-lg font-semibold text-white text-center">Choose an anonymous nickname</h2>
